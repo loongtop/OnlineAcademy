@@ -13,7 +13,7 @@ public interface IControllerBase<T, E> {
 
     Result save(@RequestBody T t);
 
-    Result get(@PathVariable E id);
+    Result getById(@PathVariable E id);
 
     Result update(@PathVariable E id, @RequestBody EntityIsRemoved o);
 
@@ -24,4 +24,6 @@ public interface IControllerBase<T, E> {
     Result delete(@PathVariable E id);
 
     Result deleteByIds(@PathVariable List<E> idList);
+
+    Result getByPage(@PathVariable int current, @PathVariable int limit);
 }

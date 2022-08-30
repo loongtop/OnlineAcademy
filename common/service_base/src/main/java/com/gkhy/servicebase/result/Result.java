@@ -33,6 +33,7 @@ public final class Result extends HashMap<String, Object> {
         r.setFail(false);
         r.setCode(SUCCESS);
         r.setMessage("Success");
+        r.data("message", "Successful operation");
         return r;
     }
 

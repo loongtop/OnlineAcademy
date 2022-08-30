@@ -18,7 +18,7 @@ import java.util.Date;
 public class JwtUtils {
 
     public static final long EXPIRE = 1000 * 60 * 60 * 24; //expiration time
-    public static final String APP_SECRET = "5ac84DbRigUDaY6pZFfWus2jZWLPHO"; //秘钥
+    public static final String APP_SECRET = "5ac84DbRigUDaY6pZFfWus2jZWLPHO";
 
     //to generate token string
     public static String getJwtToken(String id, String nickname){

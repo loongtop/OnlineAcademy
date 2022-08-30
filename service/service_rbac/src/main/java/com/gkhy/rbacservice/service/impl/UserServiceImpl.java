@@ -20,13 +20,4 @@ public class UserServiceImpl extends
         super(iRepository);
     }
 
-    @Override
-    public void removeByIds(List<Long> idList) {
-
-    }
-
-    @Override
-    public User selectByUsername(String username) {
-        return null;
-    }
 }

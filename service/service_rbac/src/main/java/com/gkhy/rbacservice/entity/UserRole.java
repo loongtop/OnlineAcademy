@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -23,8 +24,8 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Accessors(chain = true)
 @Entity
-@Table(name = "acl_user_role")
-public class UserRole extends DateModel {
+@Table(name = "user_role")
+public class UserRole implements Serializable {
 
     private static final long serialVersionUID = -7038295656222058541L;
 
@@ -35,6 +36,6 @@ public class UserRole extends DateModel {
 
     private Long userId;
 
-    private Boolean isDeleted;
+    private Boolean isRemoved;
 
 }

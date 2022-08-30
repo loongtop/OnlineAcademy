@@ -7,19 +7,11 @@ import java.util.Optional;
 
 public interface RoleService {
 
-    void saveUserRoleRelationShip(Long userId, Long[] roleId);
+    List<Role> findAllByColumnName(String roleName, String test1);
+
+    Optional<Role> findOneByColumnName(String roleName, String test1);
 
     Optional<Role> findById(Long userId);
 
-    Role save(Role role);
-
-    Role update(Role role);
-
-    void removeById(Long id);
-
-    void removeByIds(List<Long> idList);
-
-    List<Role> findRolesById(Long id);
-
-    long count();
+    void saveUserRoleRelationShip(Long userId, Long[] roleId);
 }

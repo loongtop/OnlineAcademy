@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -27,8 +28,8 @@ import java.util.List;
 @AllArgsConstructor
 @Accessors(chain = true)
 @Entity
-@Table(name = "acl_permission")
-public class Permission extends DateModel {
+@Table(name = "permission")
+public class Permission implements Serializable {
 
     private static final long serialVersionUID = -4961118546104218207L;
 
@@ -57,6 +58,6 @@ public class Permission extends DateModel {
 
     private boolean isSelect;
 
-    private Boolean isDeleted;
+    private Boolean isRemoved;
 
 }

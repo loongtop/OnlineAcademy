@@ -30,13 +30,11 @@ public class UserServiceImpl
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Optional<User> user = this.findByColumnName("email", email);
+        Optional<User> user = this.findOneByColumnName("email", email);
         if (user.isEmpty()) {
             throw new AcademyException(Oauth2Error.EMAIL_NOT_FOUND_FROM_DATABASE.getCode(),
                     Oauth2Error.EMAIL_NOT_FOUND_FROM_DATABASE.getMessage() + email);
         }
-
-//        List<Permission> permissionList = this.findByColumnName("permission");
 
         return UserPrincipal.of(user.get());
     }
@@ -51,5 +49,7 @@ public class UserServiceImpl
 
         return UserPrincipal.of(user.get());
     }
+
+
 
 }

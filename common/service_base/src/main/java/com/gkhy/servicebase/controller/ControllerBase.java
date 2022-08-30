@@ -6,6 +6,9 @@ import com.gkhy.servicebase.service.repository.IService;
 import com.gkhy.servicebase.utils.ItemFound;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,7 +24,6 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
         implements IControllerBase<T, E> {
 
     private final Repository repository;
-
     @Autowired
     public ControllerBase(Repository repository) {
         this.repository = repository;
@@ -31,8 +33,8 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     @GetMapping("/all")
     public Result findAll() {
         //Call the method of service to query all operations
-        List<T> teachers = repository.findAll();
-        return Result.success().data("items", teachers);
+        List<T> lists = repository.findAll();
+        return Result.success().data("items", lists);
     }
 
     //Add a record(row) to the table
@@ -53,7 +55,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
 
     //Query by id
     @GetMapping("/get/{id}")
-    public Result get(@PathVariable E id) {
+    public Result getById(@PathVariable E id) {
         Optional<T> entity = repository.findById(id);
         if (entity.isPresent()) {
             return Result.success().data("item", entity);
@@ -119,11 +121,28 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
 
         List<E> unableDeleted = new ArrayList<>();
         ids.forEach(id -> {
-            if (delete(id).isFail()) unableDeleted.add(id);
+            if (!repository.existsById(id)) unableDeleted.add(id);
         });
-        if (unableDeleted.isEmpty()) {
-            return Result.success();
-        }
+
+        repository.deleteAllById(ids);
+
+        if (unableDeleted.isEmpty()) return Result.success();
+
         return Result.success().data("unable to delete list", unableDeleted);
+    }
+
+    //Method for querying lecturers by page
+    //current page
+    //the limit of the number of items
+    @GetMapping("page/{current}/{limit}")
+    public Result getByPage(@PathVariable int current, @PathVariable int limit) {
+        if (current <= 0 || limit <= 0) {
+            return Result.fail().data("message", "Abnormal parameters!");
+        }
+        Pageable pageable = PageRequest.of(current-1, limit);
+        Page<T> tPage = repository.findAll(pageable);
+        long total = tPage.getNumberOfElements ();
+
+        return Result.success().data("total",total).data("rows", tPage.getContent());
     }
 }

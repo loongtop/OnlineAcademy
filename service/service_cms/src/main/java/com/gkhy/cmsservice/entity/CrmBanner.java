@@ -46,5 +46,5 @@ public class CrmBanner extends DateModel implements Serializable {
     private Integer sort;
 
     @ApiModelProperty(value = "逻辑删除 1（true）已删除， 0（false）未删除")
-    private Boolean isDeleted;
+    private Boolean isRemoved;
 }

@@ -14,7 +14,7 @@ public interface UserService
 
     Optional<User> findById(Long valueOf);
 
-    Optional<User> findByColumnName(String email, String email1);
+    Optional<User> findOneByColumnName(String email, String email1);
 
     UserDetails loadUserById(Long userId);
 }

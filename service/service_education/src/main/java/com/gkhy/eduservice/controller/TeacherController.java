@@ -34,16 +34,6 @@ public final class TeacherController
         this.teacherService = teacherService;
     }
 
-    //Method for querying lecturers by page
-    @GetMapping("page/{current}/{limit}")
-    public Result getTeacherListPage(@PathVariable int current, @PathVariable int limit) {
-        Pageable pageable = PageRequest.of(current-1, limit);
-        Page<TeacherEntity> eduTeacherList = teacherService.findAll(pageable);
-        long total = eduTeacherList.getNumberOfElements ();
-
-        return Result.success().data("total",total).data("rows",eduTeacherList.getContent());
-        }
-
     //Method of conditional query with pagination
     @PostMapping("pageTeacherCondition/{current}/{limit}")
     public Result pageTeacherCondition(@PathVariable int current, @PathVariable int limit,
@@ -55,6 +45,8 @@ public final class TeacherController
 
         return Result.success().data("total",total).data("rows",eduTeacherList.getContent());
    }
+
+
 }
 
 

@@ -6,7 +6,6 @@ import com.gkhy.rbacservice.repository.RoleRepository;
 import com.gkhy.rbacservice.service.RoleService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class RoleServiceImpl
@@ -20,21 +19,5 @@ public class RoleServiceImpl
     @Override
     public void saveUserRoleRelationShip(Long userId, Long[] roleId) {
 
-    }
-
-    @Override
-    public Role update(Role role) {
-
-        return role;
-    }
-
-    @Override
-    public void removeByIds(List<Long> idList) {
-
-    }
-
-    @Override
-    public List<Role> findRolesById(Long id) {
-        return null;
     }
 }

@@ -49,7 +49,7 @@ public class OAuth2USerServiceImpl extends DefaultOAuth2UserService implements O
                     Oauth2Error.EMAIL_NOT_FOUND_FROM_OAUTH2.getMessage());
         }
 
-        Optional<User> userOptional = userService.findByColumnName("email", oAuth2UserInfo.getEmail());
+        Optional<User> userOptional = userService.findOneByColumnName("email", oAuth2UserInfo.getEmail());
         User user;
         if(userOptional.isPresent()) {
             user = userOptional.get();

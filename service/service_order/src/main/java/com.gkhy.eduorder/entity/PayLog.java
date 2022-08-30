@@ -41,5 +41,5 @@ public class PayLog extends DateModel {
 
     private String attr;
 
-    private Boolean isDeleted;
+    private Boolean isRemoved;
 }

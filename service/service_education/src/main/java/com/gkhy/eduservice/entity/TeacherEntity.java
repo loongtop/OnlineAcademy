@@ -56,6 +56,6 @@ public class TeacherEntity extends DateModel {
 
     private Integer sort;
 
-    private Boolean isDeleted;
+    private Boolean isRemoved;
 
 }

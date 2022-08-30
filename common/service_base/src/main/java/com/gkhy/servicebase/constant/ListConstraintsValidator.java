@@ -1,6 +1,6 @@
-package com.gkhy.commonutils.constraints;
+package com.gkhy.servicebase.constant;
 
-import com.gkhy.commonutils.constraints.annotation.ListValue;
+import com.gkhy.servicebase.constant.annotation.ListValue;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

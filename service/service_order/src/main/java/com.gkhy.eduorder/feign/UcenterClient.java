@@ -1,15 +1,16 @@
-package com.gkhy.eduorder.client;
+package com.gkhy.eduorder.feign;
 
-import com.gkhy.commonutils.ordervo.UcenterMemberOrder;
-//import org.springframework.cloud.openfeign.FeignClient;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import com.gkhy.servicebase.result.Result;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Component
-//@FeignClient("service-ucenter")
+@FeignClient("service-rbac")
 public interface UcenterClient {
 
     @PostMapping("/educenter/member/getUserInfoOrder/{id}")
-    UcenterMemberOrder getUserInfoOrder(@PathVariable("id") String id);
+    Result getUserInfoOrder(@PathVariable("id") String id);
 }

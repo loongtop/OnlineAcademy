@@ -59,5 +59,5 @@ public class CourseEntity extends DateModel implements Serializable {
 
     private String status;
 
-    private Integer isDeleted;
+    private Integer isRemoved;
 }

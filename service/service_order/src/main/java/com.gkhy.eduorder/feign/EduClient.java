@@ -1,16 +1,16 @@
-package com.gkhy.eduorder.client;
+package com.gkhy.eduorder.feign;
 
-import com.gkhy.commonutils.ordervo.CourseWebVoOrder;
-//import org.springframework.cloud.openfeign.FeignClient;
+import com.gkhy.servicebase.result.Result;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Component
-//@FeignClient("service-edu")
+@FeignClient("service-education")
 public interface EduClient {
 
     @PostMapping("/eduservice/coursefront/getCourseInfoOrder/{id}")
-    CourseWebVoOrder getCourseInfoOrder(@PathVariable("id") String id);
+    Result getCourseInfoOrder(@PathVariable("id") String id);
 
 }

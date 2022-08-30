@@ -52,6 +52,6 @@ public class Order extends DateModel {
 
     private Integer status;
 
-    private Boolean isDeleted;
+    private Boolean isRemoved;
 
 }

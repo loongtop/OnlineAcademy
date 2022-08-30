@@ -141,20 +141,19 @@ public abstract class ServiceImpl<T, E extends Number, Repository extends IServi
         return  new ArrayList<>(iRepository.findAll(sort).subList(0, limit));
     }
 
-
-    private Specification<T> getSpecification(String columnName, String item) {
-        return (root, query, cb) ->  cb.equal(root.get(columnName), item);
+    private Specification<T> getSpecification(String columnName, String value) {
+        return (root, query, cb) ->  cb.equal(root.get(columnName), value);
     }
 
-    public Optional<T> findByColumnName(String columnName, String item) {
-        return iRepository.findOne(getSpecification(columnName, item));
+    public Optional<T> findOneByColumnName(String columnName, String value) {
+        return iRepository.findOne(getSpecification(columnName, value));
     }
 
-    public Optional<T> findByColumnName(String columnName) {
-        return Optional.empty();
+    public List<T> findAllByColumnName(String columnName, String value) {
+        return iRepository.findAll(getSpecification(columnName, value));
     }
 
-    public boolean existsByColumnName(String columnName, String item) {
-        return iRepository.exists(getSpecification(columnName, item));
+    public boolean existsByColumnName(String columnName, String value) {
+        return iRepository.exists(getSpecification(columnName, value));
     }
 }
