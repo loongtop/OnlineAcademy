@@ -1,9 +1,9 @@
 package com.gkhy.servicebase.controller;
 
 // used for remove operation
-public class IsEnable {
+public class EntityIsRemoved {
     private boolean enabled;
-    public IsEnable() {
+    public EntityIsRemoved() {
         this.enabled = false;
     }
 }

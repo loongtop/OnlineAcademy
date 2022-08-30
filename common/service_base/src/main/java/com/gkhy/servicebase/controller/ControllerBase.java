@@ -48,7 +48,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
 
     //Teacher modification function
     @PostMapping("update/{id}")
-    public Result update(@PathVariable E id, @RequestBody IsEnable o) {
+    public Result update(@PathVariable E id, @RequestBody EntityIsRemoved o) {
         Optional<T> t = repository.findById(id);
         if (t.isPresent()) {
             BeanUtils.copyProperties(o, t.get());
@@ -63,7 +63,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     public Result remove(@PathVariable E id) {
         Optional<T> t = repository.findById(id);
         if (t.isPresent()) {
-            IsEnable isEnable = new IsEnable();
+            EntityIsRemoved isEnable = new EntityIsRemoved();
             BeanUtils.copyProperties(isEnable, t);
             repository.saveAndFlush(t.get());
             return Result.success().data("message", "delete ok!");
