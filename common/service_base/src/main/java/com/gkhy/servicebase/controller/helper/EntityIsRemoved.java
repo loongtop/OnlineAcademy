@@ -1,8 +1,11 @@
-package com.gkhy.servicebase.controller;
+package com.gkhy.servicebase.controller.helper;
+
+import lombok.Value;
 
 // used for remove operation
+@Value
 public class EntityIsRemoved {
-    private boolean enabled;
+    public boolean enabled;
     public EntityIsRemoved() {
         this.enabled = false;
     }

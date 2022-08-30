@@ -1,5 +1,6 @@
 package com.gkhy.servicebase.controller;
 
+import com.gkhy.servicebase.controller.helper.EntityIsRemoved;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.servicebase.service.repository.IService;
 import com.gkhy.servicebase.utils.ItemFound;
@@ -7,28 +8,35 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ControllerBase<T, E extends Number, Repository extends IService<T, E>>{
+/**
+ * ControllerBase for all the controller to extends
+ *
+ * */
+
+public abstract class ControllerBase<T, E extends Number, Repository extends IService<T, E>>
+        implements IControllerBase<T, E> {
 
     private final Repository repository;
+
     @Autowired
     public ControllerBase(Repository repository) {
         this.repository = repository;
     }
 
-    //Query all data in the lecturer table
-    @GetMapping("all")
+    //Query all rows(data) from the table
+    @GetMapping("/all")
     public Result findAll() {
         //Call the method of service to query all operations
         List<T> teachers = repository.findAll();
-        System.out.println("in the new controller!");
         return Result.success().data("items", teachers);
     }
 
-    //Add the method of the lecturer interface
-    @PostMapping("add")
+    //Add a record(row) to the table
+    @PostMapping("/add")
     public Result add(@RequestBody Object o) {
         T t = (T) new Object();
         BeanUtils.copyProperties(o, t);
@@ -36,8 +44,15 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
         return Result.success().data("item", entity);
     }
 
-    //Query by instructor id
-    @GetMapping("get/{id}")
+    //Save method
+    @PostMapping("/save")
+    public Result save(@RequestBody T t) {
+        T entity = repository.saveAndFlush(t);
+        return Result.success().data("item", entity);
+    }
+
+    //Query by id
+    @GetMapping("/get/{id}")
     public Result get(@PathVariable E id) {
         Optional<T> entity = repository.findById(id);
         if (entity.isPresent()) {
@@ -46,8 +61,8 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
         return ItemFound.fail();
     }
 
-    //Teacher modification function
-    @PostMapping("update/{id}")
+    //update a record(row)
+    @PostMapping("/update/{id}")
     public Result update(@PathVariable E id, @RequestBody EntityIsRemoved o) {
         Optional<T> t = repository.findById(id);
         if (t.isPresent()) {
@@ -58,27 +73,57 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
         return ItemFound.fail();
     }
 
-    //logically delete a teacher (IsDeleted = true)
-    @DeleteMapping("remove/{id}")
+    //logically remove a record(row) (enabled = false)
+    @DeleteMapping("/remove/{id}")
     public Result remove(@PathVariable E id) {
         Optional<T> t = repository.findById(id);
         if (t.isPresent()) {
             EntityIsRemoved isEnable = new EntityIsRemoved();
-            BeanUtils.copyProperties(isEnable, t);
+            BeanUtils.copyProperties(isEnable, t.get());
             repository.saveAndFlush(t.get());
-            return Result.success().data("message", "delete ok!");
+            return Result.success().data("message", String.format("Remove id %s ok!", id));
         }
         return ItemFound.fail();
     }
 
-    // delete a teacher from database
-    @DeleteMapping("delete/{id}")
+    //logically remove records(rows) (enabled = false)
+    @DeleteMapping("/batchRemove")
+    public Result removeByIds(@RequestParam("ids") List<E> ids) {
+
+        List<E> unableRemoved = new ArrayList<>();
+        ids.forEach(id -> {
+            Result t = remove(id);
+           if (t.isFail()) unableRemoved.add(id);
+        });
+
+        if (unableRemoved.isEmpty()) {
+            return Result.success();
+        }
+        return Result.success().data("unable to removed list", unableRemoved);
+    }
+
+    //delete a record(row) from the table, Unable to restore
+    @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable E id) {
         Optional<T> t = repository.findById(id);
         if (t.isPresent()) {
             repository.deleteById(id);
-            return Result.success().data("message", "delete ok!");
+            return Result.success().data("message", String.format("Delete id %s ok!", id));
         }
         return ItemFound.fail();
+    }
+
+    //delete records(rows) from the table, Unable to restore
+    @DeleteMapping("/batchDelete")
+    public Result deleteByIds(@RequestParam("ids") List<E> ids) {
+
+        List<E> unableDeleted = new ArrayList<>();
+        ids.forEach(id -> {
+            if (delete(id).isFail()) unableDeleted.add(id);
+        });
+        if (unableDeleted.isEmpty()) {
+            return Result.success();
+        }
+        return Result.success().data("unable to delete list", unableDeleted);
     }
 }

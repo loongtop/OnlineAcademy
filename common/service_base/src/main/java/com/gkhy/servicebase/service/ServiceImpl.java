@@ -1,6 +1,5 @@
 package com.gkhy.servicebase.service;
 
-import com.gkhy.servicebase.service.repository.IService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
@@ -9,7 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.gkhy.servicebase.service.repository.IService;
 
+/**
+ * abstract ServiceImpl class for all the model service inheriting
+ *
+ * */
 public abstract class ServiceImpl<T, E extends Number, Repository extends IService<T, E>> {
 
     protected Repository iRepository;
@@ -136,6 +140,7 @@ public abstract class ServiceImpl<T, E extends Number, Repository extends IServi
         Sort sort = Sort.by(direction, property);
         return  new ArrayList<>(iRepository.findAll(sort).subList(0, limit));
     }
+
 
     private Specification<T> getSpecification(String columnName, String item) {
         return (root, query, cb) ->  cb.equal(root.get(columnName), item);
