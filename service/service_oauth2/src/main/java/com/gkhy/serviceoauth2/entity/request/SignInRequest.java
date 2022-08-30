@@ -1,0 +1,20 @@
+package com.gkhy.serviceoauth2.entity.request;
+
+import lombok.Data;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+/**
+ * Created by Leo
+ * 2020-08-26.
+ */
+@Data
+public class SignInRequest {
+    @NotBlank
+    @Email
+    private String email;
+
+    @NotBlank
+    private String password;
+}
