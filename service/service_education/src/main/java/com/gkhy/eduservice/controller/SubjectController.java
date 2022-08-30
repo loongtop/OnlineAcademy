@@ -40,12 +40,4 @@ public final class SubjectController {
         subjectService.saveSubject(file, subjectService);
         return Result.success();
     }
-
-    @GetMapping("all")
-    // first class category (Tree)
-    public Result findAll() {
-        List<MainSubject> list = subjectService.getAllOneTwoSubject();
-        return Result.success().data("list", list);
-    }
-
 }

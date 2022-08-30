@@ -34,14 +34,6 @@ public final class VideoController {
         this.videoFeignClient = videoFeignClient;
     }
 
-    @PostMapping("add")
-    public Result addVideo(@RequestBody VideoEntity videoEntity) {
-
-        VideoEntity entity = videoService.save(videoEntity);
-        return Result.success().data("item", entity);
-
-    }
-
     // TODO
     //  when deleting a subsection, delete the video inside at the same time
     @DeleteMapping("delete/{id}")
@@ -61,24 +53,5 @@ public final class VideoController {
         videoService.removeById(id);
         return Result.success();
     }
-
-    @PutMapping("update")
-    public Result updateVideo(@RequestBody VideoForm videoForm){
-
-        VideoEntity videoEntity = new VideoEntity();
-
-        VideoEntity entity = videoService.update(videoForm, videoEntity);
-        return Result.success().data("item", entity);
-    }
-
-    @GetMapping("get/{id}")
-    public Result getVideoById(@PathVariable Long id){
-
-        Optional<VideoEntity> video = videoService.findById(id);
-        if (video.isEmpty()) return ItemFound.fail();
-
-        return Result.success().data("item", video);
-    }
-
 }
 
