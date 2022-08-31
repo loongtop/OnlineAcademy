@@ -1,11 +1,11 @@
 package com.gkhy.rbacservice.entity;
 
-import com.gkhy.servicebase.DateModel;
 import lombok.*;
-import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <p>
@@ -29,7 +29,7 @@ public class Role implements Serializable {
     @Column(name = "ID")
     private Long id;
 
-//    @Column(name = "ROLE_NAME", nullable = false)
+    @Column(name = "ROLE_NAME", nullable = false)
     private String roleName;
 
     @Column(name = "ROLE_CODE", nullable = false)
@@ -39,6 +39,8 @@ public class Role implements Serializable {
     private String remark;
 
     @Column(name = "IS_REMOVED", nullable = false)
-    private Boolean isRemoved;
+    private Boolean enabled = Boolean.TRUE;
+
+//    List<Permission> permissions;
 
 }

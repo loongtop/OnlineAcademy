@@ -4,9 +4,9 @@ import lombok.Value;
 
 // used for remove operation
 @Value
-public class EntityIsRemoved {
+public class EntityIsEnabled {
     public boolean enabled;
-    public EntityIsRemoved() {
+    public EntityIsEnabled() {
         this.enabled = false;
     }
 }

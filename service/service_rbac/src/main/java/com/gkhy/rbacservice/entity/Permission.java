@@ -1,6 +1,5 @@
 package com.gkhy.rbacservice.entity;
 
-import com.gkhy.servicebase.DateModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -58,6 +57,8 @@ public class Permission implements Serializable {
 
     private boolean isSelect;
 
-    private Boolean isRemoved;
+    private Boolean enabled = Boolean.TRUE;
+
+    private String menu;
 
 }

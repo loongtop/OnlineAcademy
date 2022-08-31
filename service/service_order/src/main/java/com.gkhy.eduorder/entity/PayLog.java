@@ -1,6 +1,6 @@
 package com.gkhy.eduorder.entity;
 
-import com.gkhy.servicebase.DateModel;
+import com.gkhy.servicebase.basemodel.DateModel;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -41,5 +41,5 @@ public class PayLog extends DateModel {
 
     private String attr;
 
-    private Boolean isRemoved;
+    private Boolean enabled = Boolean.TRUE;
 }

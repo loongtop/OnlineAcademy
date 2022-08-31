@@ -1,6 +1,6 @@
 package com.gkhy.servicebase.user;
 
-import com.gkhy.servicebase.DateModel;
+import com.gkhy.servicebase.basemodel.DateModel;
 import com.gkhy.servicebase.user.enums.AuthProvider;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -62,7 +62,7 @@ public class User extends DateModel implements Serializable {
     protected boolean credentialsNonExpired;
 
     @Column(name = "ENABLED")
-    protected boolean enabled;
+    protected Boolean enabled = Boolean.TRUE;
 
     protected String providerId;
 

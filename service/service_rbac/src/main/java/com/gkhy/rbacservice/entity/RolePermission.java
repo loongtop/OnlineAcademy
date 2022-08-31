@@ -1,6 +1,5 @@
 package com.gkhy.rbacservice.entity;
 
-import com.gkhy.servicebase.DateModel;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -34,7 +33,7 @@ public class RolePermission implements Serializable {
 
     private Long permissionId;
 
-    private Boolean isRemoved;
+    private Boolean enabled = Boolean.TRUE;
 
 }
 

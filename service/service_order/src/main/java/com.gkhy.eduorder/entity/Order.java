@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 
-import com.gkhy.servicebase.DateModel;
+import com.gkhy.servicebase.basemodel.DateModel;
 
 /**
  * <p>
@@ -52,6 +52,6 @@ public class Order extends DateModel {
 
     private Integer status;
 
-    private Boolean isRemoved;
+    private Boolean enabled = Boolean.TRUE;
 
 }

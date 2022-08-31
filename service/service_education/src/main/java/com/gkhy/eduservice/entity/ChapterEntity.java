@@ -1,6 +1,6 @@
 package com.gkhy.eduservice.entity;
 
-import com.gkhy.servicebase.DateModel;
+import com.gkhy.servicebase.basemodel.DateModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

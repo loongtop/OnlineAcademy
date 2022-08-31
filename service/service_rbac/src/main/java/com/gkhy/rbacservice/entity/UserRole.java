@@ -1,7 +1,6 @@
 package com.gkhy.rbacservice.entity;
 
 
-import com.gkhy.servicebase.DateModel;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -36,6 +35,6 @@ public class UserRole implements Serializable {
 
     private Long userId;
 
-    private Boolean isRemoved;
+    private Boolean enabled = Boolean.TRUE;
 
 }

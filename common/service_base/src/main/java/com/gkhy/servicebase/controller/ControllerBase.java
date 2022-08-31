@@ -1,6 +1,6 @@
 package com.gkhy.servicebase.controller;
 
-import com.gkhy.servicebase.controller.helper.EntityIsRemoved;
+import com.gkhy.servicebase.controller.helper.EntityIsEnabled;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.servicebase.service.repository.IService;
 import com.gkhy.servicebase.utils.ItemFound;
@@ -65,7 +65,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
 
     //update a record(row)
     @PostMapping("/update/{id}")
-    public Result update(@PathVariable E id, @RequestBody EntityIsRemoved o) {
+    public Result update(@PathVariable E id, @RequestBody EntityIsEnabled o) {
         Optional<T> t = repository.findById(id);
         if (t.isPresent()) {
             BeanUtils.copyProperties(o, t.get());
@@ -80,7 +80,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     public Result remove(@PathVariable E id) {
         Optional<T> t = repository.findById(id);
         if (t.isPresent()) {
-            EntityIsRemoved isEnable = new EntityIsRemoved();
+            EntityIsEnabled isEnable = new EntityIsEnabled();
             BeanUtils.copyProperties(isEnable, t.get());
             repository.saveAndFlush(t.get());
             return Result.success().data("message", String.format("Remove id %s ok!", id));
