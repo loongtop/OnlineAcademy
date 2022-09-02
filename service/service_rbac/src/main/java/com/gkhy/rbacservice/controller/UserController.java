@@ -1,5 +1,7 @@
 package com.gkhy.rbacservice.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.gkhy.commonutils.encryption.MD5;
 import com.gkhy.rbacservice.entity.RbacUser;
 import com.gkhy.rbacservice.repository.UserRepository;
 import com.gkhy.servicebase.controller.ControllerBase;
@@ -7,9 +9,11 @@ import com.gkhy.rbacservice.service.UserService;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.rbacservice.entity.Role;
 import com.gkhy.rbacservice.service.RoleService;
+import com.gkhy.servicebase.utils.ItemFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 /**
@@ -34,51 +38,6 @@ public class UserController extends ControllerBase<RbacUser, Long, UserRepositor
         this.roleService = roleService;
     }
 
-    /**
-     * Extends these methods from the class ControllerBase
-     *
-     *    //Query all rows(data) from the table
-     *     @GetMapping("/all")
-     *     public Result findAll() ;
-     *
-     *     //Add a record(row) to the table
-     *     @PutMapping("/add")
-     *     public Result add(@RequestBody Object o) ;
-     *
-     *     //Save method
-     *     @PostMapping("/save")
-     *     public Result save(@RequestBody T t) ;
-     *
-     *     //Query by id
-     *     @GetMapping("/get/{id}")
-     *     public Result getById(@PathVariable E id) ;
-     *
-     *     //update a record(row)
-     *     @PostMapping("/update/{id}")
-     *     public Result update(@PathVariable E id, @RequestBody Object o)
-     *
-     *     //logically remove a record(row)
-     *     @DeleteMapping("/remove/{id}")
-     *     public Result remove(@PathVariable E id) ;
-     *
-     *     //logically remove records(rows)
-     *     @DeleteMapping("/batchRemove")
-     *     public Result removeByIds(@RequestParam("ids") List<E> ids) ;
-     *
-     *     //delete a record(row) from the table, Unable to restore
-     *     @DeleteMapping("/delete/{id}")
-     *     public Result delete(@PathVariable E id) ;
-     *
-     *     //delete records(rows) from the table, Unable to restore
-     *     @DeleteMapping("/batchDelete")
-     *     public Result deleteByIds(@RequestParam("ids") List<E> ids);
-     *
-     *     //Method for querying lecturers by page
-     *     //current page
-     *     //the limit of the number of items
-     *     @GetMapping("page/{current}/{limit}")
-     *     public Result getByPage(@PathVariable int current, @PathVariable int limit);
-     * */
 
     @GetMapping("/toAssign/{UserId}")
     public Result toAssign(@PathVariable Long UserId) {
@@ -90,5 +49,27 @@ public class UserController extends ControllerBase<RbacUser, Long, UserRepositor
     public Result doAssign(@RequestParam Long UserId, @RequestParam Long[] roleId) {
         roleService.saveUserRoleRelationShip(UserId,roleId);
         return Result.success();
+    }
+
+    @PutMapping("/resetpassword")
+    public Result resetPassword(@Valid @PathVariable Long id, @Valid @RequestBody JSONObject password) {
+        String oldPwd = MD5.encrypt((String) password.get("oldPassword"));
+        Optional<RbacUser> user = userService.findById(id);
+        if (!user.isPresent()) return ItemFound.fail();
+
+        RbacUser entity = user.get();
+        if (!oldPwd.equals(entity.getPassword())) {
+            return Result.fail().data("message", "Password was wrong!");
+        }
+
+        String newPassword1 = (String) password.get("password1");
+        String newPassword2 = (String) password.get("password2");
+        if (!newPassword1.equals(newPassword2)) {
+            return Result.fail().data("message", "Passwords were different!");
+        }
+        entity.setPassword(MD5.encrypt((String) password.get("newPassword1")));
+        userService.save(entity);
+        return Result.success().data("message", "Passwords change successfully!");
+
     }
 }

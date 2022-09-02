@@ -7,6 +7,7 @@ import com.gkhy.servicebase.result.Result;
 import com.gkhy.servicebase.service.repository.IService;
 import com.gkhy.servicebase.utils.ItemFound;
 import lombok.SneakyThrows;
+import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,9 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * ControllerBase for all the controller to extends
@@ -44,23 +43,15 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
 
     //Add a record(row) to the table
     @PostMapping("/add")
-    public Result add(@Valid @RequestBody JSONObject jsonObject) {
-
-        //if JSONObject contains password, encrypt it before storing
-        if (jsonObject.containsKey("password")) {
-            String password = MD5.encrypt(jsonObject.getString("password"));
-            jsonObject.replace("password", password);
+    public Result add(@Valid @RequestBody JSONObject obj) {
+        // Encrypt before storing for password
+        if (obj.containsKey("password")) {
+            String passwordMD5  = MD5.encrypt((String) obj.get("password"));
+            obj.replace("password", passwordMD5);
         }
 
-        T entity = JSONObjectToT(jsonObject);
+        T entity = JSONObjectToT(obj);
         entity = repository.saveAndFlush(entity);
-        return Result.success().data("item", entity);
-    }
-
-    //Save method
-    @PostMapping("/save")
-    public Result save(@Valid @RequestBody T t) {
-        T entity = repository.saveAndFlush(t);
         return Result.success().data("item", entity);
     }
 
@@ -75,18 +66,31 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     }
 
     //update a record(row)
+    @SneakyThrows
     @PutMapping("/update/{id}")
-    public Result update(@Valid @PathVariable E id, @Valid @RequestBody JSONObject o) {
+    public Result updateById(@Valid @PathVariable E id, @Valid @RequestBody JSONObject obj) {
         Optional<T> tOptional = repository.findById(id);
         if (tOptional.isPresent()) {
+            T entity = tOptional.get();
 
-//            S obj = o.toJavaObject(S.class);
-//
-//            BeanUtils.copyProperties(obj, tOptional.get());
-//            obj = repository.saveAndFlush(tOptional.get());
-            return Result.success().data("item", tOptional);
+            PropertyUtilsBean bean = new PropertyUtilsBean();
+            obj.remove("id");
+            obj.remove("password");
+            bean.copyProperties(entity, obj);
+
+            entity = repository.saveAndFlush(entity);
+            return Result.success().data("item", entity);
         }
         return ItemFound.fail();
+    }
+
+
+    //update a record(row) by entity
+    @PutMapping("/update")
+    public Result update(@Valid @RequestBody JSONObject obj) {
+
+        E id = (E) obj.get("id");
+        return updateById(id, obj);
     }
 
     //logically remove a record(row) (enabled = false)
@@ -163,7 +167,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
 
     /**
      * @Description: Use the reflection mechanism to obtain the type of T,
-     *               convert the data from the front end to type T, and store it in the database
+     * convert the data from the front end to type T, and store it in the database
      * @Param: jsonObject from frontend
      * @Return: T type
      * @Author: leo
@@ -175,8 +179,8 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
         final String className = parameterizedType.getActualTypeArguments()[0].getTypeName();
 
         Class clazz = Class.forName(className);
-        T t = (T)clazz.getConstructor().newInstance();
+        T t = (T) clazz.getConstructor().newInstance();
 
-        return (T)jsonObject.toJavaObject(t.getClass());
+        return (T) jsonObject.toJavaObject(t.getClass());
     }
 }
