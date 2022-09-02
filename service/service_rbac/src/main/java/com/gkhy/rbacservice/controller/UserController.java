@@ -1,8 +1,8 @@
 package com.gkhy.rbacservice.controller;
 
+import com.gkhy.rbacservice.entity.RbacUser;
+import com.gkhy.rbacservice.repository.UserRepository;
 import com.gkhy.servicebase.controller.ControllerBase;
-import com.gkhy.servicebase.user.IUserRepository;
-import com.gkhy.servicebase.user.User;
 import com.gkhy.rbacservice.service.UserService;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.rbacservice.entity.Role;
@@ -21,15 +21,15 @@ import java.util.Optional;
  * @since 2022-07-08
  */
 @RestController
-@RequestMapping("/admin/rbac/user/")
-public class UserController extends ControllerBase<User, Long, IUserRepository> {
+@RequestMapping("/admin/user/")
+public class UserController extends ControllerBase<RbacUser, Long, UserRepository> {
 
     private final UserService userService;
     private final RoleService roleService;
 
     @Autowired
-    public UserController(IUserRepository iUserRepository, UserService userService, RoleService roleService) {
-        super(iUserRepository);
+    public UserController(UserRepository userRepository, UserService userService, RoleService roleService) {
+        super(userRepository);
         this.userService = userService;
         this.roleService = roleService;
     }
@@ -42,7 +42,7 @@ public class UserController extends ControllerBase<User, Long, IUserRepository> 
      *     public Result findAll() ;
      *
      *     //Add a record(row) to the table
-     *     @PostMapping("/add")
+     *     @PutMapping("/add")
      *     public Result add(@RequestBody Object o) ;
      *
      *     //Save method

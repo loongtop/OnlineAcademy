@@ -1,11 +1,11 @@
 package com.gkhy.rbacservice.service;
 
 
-import com.gkhy.servicebase.user.User;
+import com.gkhy.rbacservice.entity.RbacUser;
 
 import java.util.Optional;
 
 public interface UserService {
 
-    Optional<User> findOneByColumnName(String name, String username);
+    Optional<RbacUser> findOneByColumnName(String name, String username);
 }

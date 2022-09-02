@@ -10,8 +10,8 @@ import java.util.List;
 
 @Service
 public class PermissionServiceImpl
-        extends ServiceImpl<Permission, Long, PermissionRepository>
-        implements PermissionService {
+        extends ServiceImpl<Permission, Long, PermissionRepository> implements PermissionService {
+
     public PermissionServiceImpl(PermissionRepository iRepository) {
         super(iRepository);
     }

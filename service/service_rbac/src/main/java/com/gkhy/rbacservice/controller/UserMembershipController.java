@@ -1,26 +1,27 @@
 package com.gkhy.rbacservice.controller;
 
-
-import com.gkhy.rbacservice.repository.PermissionRepository;
+import com.gkhy.rbacservice.entity.user.UserMembership;
+import com.gkhy.rbacservice.repository.UserMembershipRepository;
 import com.gkhy.servicebase.controller.ControllerBase;
-import com.gkhy.servicebase.result.Result;
-import com.gkhy.rbacservice.entity.Permission;
-import com.gkhy.rbacservice.service.PermissionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
+/**
+ * @ClassName: UserMembershipController
+ * @Description:
+ * @Author: leo
+ * @CreatedDate: 2022-09-01
+ * @UpdatedDate: 2022-09-01
+ * @Version: 1.0
+ **/
 @RestController
-@RequestMapping("/admin/rbac/permission")
-public class PermissionController extends ControllerBase<Permission, Long, PermissionRepository> {
+@RequestMapping("/admin/usermembership")
+public class UserMembershipController extends ControllerBase<UserMembership, Long, UserMembershipRepository> {
 
-    private final PermissionService permissionService;
-    @Autowired
-    public PermissionController(PermissionRepository permissionRepository, PermissionService permissionService) {
-        super(permissionRepository);
-        this.permissionService = permissionService;
+    public UserMembershipController(UserMembershipRepository userMembershipRepository) {
+        super(userMembershipRepository);
     }
+
     /**
      * Extends these methods from the class ControllerBase
      *
@@ -66,21 +67,4 @@ public class PermissionController extends ControllerBase<Permission, Long, Permi
      *     @GetMapping("page/{current}/{limit}")
      *     public Result getByPage(@PathVariable int current, @PathVariable int limit);
      * */
-    @GetMapping
-    public Result indexAllPermissionEntity() {
-        List<Permission> list = permissionService.queryAllMenu();
-        return Result.success().data("children", list);
-    }
-
-    @PostMapping("/doAssign")
-    public Result doAssign(Long roleId, Long[] PermissionEntityId) {
-        permissionService.saveRolePermissionEntityRelationShip(roleId, PermissionEntityId);
-        return Result.success();
-    }
-
-    @GetMapping("toAssign/{roleId}")
-    public Result toAssign(@PathVariable Long roleId) {
-        List<Permission> list = permissionService.selectAllMenu(roleId);
-        return Result.success().data("children", list);
-    }
 }

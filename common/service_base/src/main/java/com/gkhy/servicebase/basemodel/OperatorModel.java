@@ -19,7 +19,7 @@ import lombok.Setter;
         value = {"createdAt", "updatedAt"},
         allowGetters = true
 )
-public abstract class OperatorModel implements Serializable {
+public abstract class OperatorModel extends DateModel{
 
     @Column(name = "CREATED_BY")
     private String createdBy;

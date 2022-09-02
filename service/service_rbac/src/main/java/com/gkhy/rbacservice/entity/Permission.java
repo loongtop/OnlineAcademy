@@ -1,49 +1,50 @@
 package com.gkhy.rbacservice.entity;
 
-import lombok.AllArgsConstructor;
+import com.gkhy.rbacservice.entity.permission.Privilege;
+import com.gkhy.servicebase.basemodel.DateModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Accessors;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.io.Serializable;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
- * <p>
- * Permission
- * </p>
- *
- * @author leo
- * @since 2022-07-01
- */
+ * @ClassName Permission
+ * @Description: the permission of the users
+ * @Author: leo
+ * @CreatedDate: 2022-08-31
+ * @UpdatedDate: 2022-08-31
+ * @Version: 1.0
+ **/
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Accessors(chain = true)
 @Entity
-@Table(name = "permission")
-public class Permission implements Serializable {
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+public final class Permission extends DateModel {
 
     private static final long serialVersionUID = -4961118546104218207L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    private Long pid;
-
     private String name;
+
+    @JoinColumn(name = "id",referencedColumnName = "id")
+    @OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
+    private Privilege privilege;
 
     private Integer type;
 
     private String permissionValue;
 
-    private String path;
+    private String url;
 
     private String component;
 
@@ -52,13 +53,22 @@ public class Permission implements Serializable {
     private Integer status;
 
     private Integer level;
-    @OneToMany
-    private List<Permission> children;
 
     private boolean isSelect;
 
     private Boolean enabled = Boolean.TRUE;
 
-    private String menu;
+    private LocalDateTime expiryTime;
 
+    @Transient
+    private List<?> permissions;
+
+    @ManyToMany(mappedBy = "permissions")
+    private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany(targetEntity = Privilege.class, cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @JoinTable(name = "permission_privilege",
+            joinColumns = {@JoinColumn(name = "permission_id"), },
+            inverseJoinColumns = {@JoinColumn(name = "privilege_id")})
+    private Set<Privilege> privileges = new HashSet<>();
 }

@@ -32,7 +32,7 @@ public class RoleController extends ControllerBase<Role, Long, RoleRepository> {
      *     public Result findAll() ;
      *
      *     //Add a record(row) to the table
-     *     @PostMapping("/add")
+     *     @PutMapping("/add")
      *     public Result add(@RequestBody Object o) ;
      *
      *     //Save method

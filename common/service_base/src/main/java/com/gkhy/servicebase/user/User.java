@@ -1,21 +1,21 @@
 package com.gkhy.servicebase.user;
 
-import com.gkhy.servicebase.basemodel.DateModel;
-import com.gkhy.servicebase.user.enums.AuthProvider;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-@Getter
-@Setter
-@NoArgsConstructor
+import lombok.Data;
+
+import com.gkhy.servicebase.basemodel.DateModel;
+import com.gkhy.servicebase.user.enums.AuthProvider;
+
+@Data
 @Entity
-@Inheritance
+@JsonIgnoreProperties(value = "{password}")
 @Table(name = "member_center",
         uniqueConstraints = { @UniqueConstraint(columnNames = { "USER_NAME" }) })
 public class User extends DateModel implements Serializable {
@@ -28,6 +28,7 @@ public class User extends DateModel implements Serializable {
     @Column(name = "USER_NAME", nullable = false)
     protected String username;
 
+    @JsonIgnore
     @Column(name = "PASSWORD")
     protected String password;
 
@@ -66,7 +67,13 @@ public class User extends DateModel implements Serializable {
 
     protected String providerId;
 
+    @Column(name = "BIRTHDATE")
+    private java.time.LocalDate birthDate;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private AuthProvider provider;
+
+    @Column(name = "NUMBER")
+    private Long number;
 }
