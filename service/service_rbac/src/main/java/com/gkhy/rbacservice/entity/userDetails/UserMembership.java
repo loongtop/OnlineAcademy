@@ -1,5 +1,6 @@
-package com.gkhy.rbacservice.entity.user;
+package com.gkhy.rbacservice.entity.userDetails;
 
+import com.gkhy.rbacservice.entity.UserRbac;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,14 +29,17 @@ public final class UserMembership {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @JoinColumn(name = "id",referencedColumnName = "id")
+    @OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+    private UserRbac user;
 
-    private String passwordQuestion;
+    @Column(nullable = false)
+    private String passwordQuestion = "Who am I ?";
 
+    @Column(nullable = false)
     private String passwordAnswer;
 
-    private Boolean isLockedOut;
+    private Boolean isLockedOut = Boolean.FALSE;
 
     private int loginNumbers;
 
@@ -53,6 +57,6 @@ public final class UserMembership {
 
     private int passwordAnswerFailedNumbers;
 
-    private String remark;
+    private String description;
 
 }

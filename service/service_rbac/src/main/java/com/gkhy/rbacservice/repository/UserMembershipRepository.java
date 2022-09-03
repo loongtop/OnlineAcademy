@@ -1,7 +1,7 @@
 package com.gkhy.rbacservice.repository;
 
 
-import com.gkhy.rbacservice.entity.user.UserMembership;
+import com.gkhy.rbacservice.entity.userDetails.UserMembership;
 import com.gkhy.servicebase.service.IRepositoryBase;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package com.gkhy.rbacservice.repository;
 
 
-import com.gkhy.rbacservice.entity.RbacUser;
+import com.gkhy.rbacservice.entity.UserRbac;
 import com.gkhy.servicebase.service.IRepositoryBase;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +14,5 @@ import org.springframework.stereotype.Repository;
  * @Version: 1.0
  **/
 @Repository
-public interface UserRepository extends IRepositoryBase<RbacUser, Long> {
+public interface UserRepository extends IRepositoryBase<UserRbac, Long> {
 }

@@ -2,7 +2,7 @@ package com.gkhy.rbacservice.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.gkhy.servicebase.redis.RedisService;
-import com.gkhy.rbacservice.entity.RbacUser;
+import com.gkhy.rbacservice.entity.UserRbac;
 import com.gkhy.rbacservice.service.IndexService;
 import com.gkhy.rbacservice.service.PermissionService;
 import com.gkhy.rbacservice.service.RoleService;
@@ -31,8 +31,8 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public Map<String, Object> getUserInfo(String username) {
 
-        Optional<RbacUser> optionalUser = userService.findOneByColumnName("user_name", username);
-        RbacUser user = optionalUser
+        Optional<UserRbac> optionalUser = userService.findOneByColumnName("user_name", username);
+        UserRbac user = optionalUser
                 .orElseThrow(()->new NoSuchElementException(String.format("Can not find User bu name %s", username)));
 
 //        List<Role> roleList = roleService.findById(user.getId()));

@@ -11,14 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TeacherService {
-    
-    Optional<TeacherEntity> findById(Long id);
-
-    void deleteById(Long id);
-
-    void removeById(Long id);
-
-    Optional<TeacherEntity> findOne(Specification<TeacherEntity> spec);
 
     List<TeacherEntity> findAll();
 
@@ -31,10 +23,6 @@ public interface TeacherService {
     List<TeacherEntity> findAll(Specification<TeacherEntity> spec, Sort sort);
 
     Page<TeacherEntity> findAll(TeacherVo teacherQuery, int current, int limit);
-
-    TeacherEntity save(TeacherEntity eduTeacher);
-
-    TeacherEntity update(Object teacherIn, TeacherEntity teacher);
 
     List<TeacherEntity> findAll(Sort sort);
 

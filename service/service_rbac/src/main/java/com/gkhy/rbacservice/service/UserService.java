@@ -1,15 +1,15 @@
 package com.gkhy.rbacservice.service;
 
 
-import com.gkhy.rbacservice.entity.RbacUser;
+import com.gkhy.rbacservice.entity.UserRbac;
 
 import java.util.Optional;
 
 public interface UserService {
 
-    Optional<RbacUser> findOneByColumnName(String name, String username);
+    Optional<UserRbac> findOneByColumnName(String name, String username);
 
-    Optional<RbacUser> findById(Long id);
+    Optional<UserRbac> findById(Long id);
 
-    void save(RbacUser entity);
+    UserRbac save(UserRbac entity);
 }

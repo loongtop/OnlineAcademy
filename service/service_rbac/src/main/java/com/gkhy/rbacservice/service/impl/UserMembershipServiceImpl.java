@@ -1,6 +1,6 @@
 package com.gkhy.rbacservice.service.impl;
 
-import com.gkhy.rbacservice.entity.user.UserMembership;
+import com.gkhy.rbacservice.entity.userDetails.UserMembership;
 import com.gkhy.rbacservice.repository.UserMembershipRepository;
 import com.gkhy.rbacservice.service.UserMembershipService;
 import com.gkhy.servicebase.service.ServiceImpl;

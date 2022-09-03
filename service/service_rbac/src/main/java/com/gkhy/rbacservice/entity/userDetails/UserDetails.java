@@ -1,5 +1,6 @@
-package com.gkhy.rbacservice.entity.user;
+package com.gkhy.rbacservice.entity.userDetails;
 
+import com.gkhy.rbacservice.entity.UserRbac;
 import com.gkhy.servicebase.basemodel.DateModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,11 +30,8 @@ public final class UserDetails extends DateModel {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
-
     @Column(name = "gender")
-    private Integer gender;
+    private String gender;
 
     @Column(name = "age")
     private Integer age;
@@ -43,8 +41,6 @@ public final class UserDetails extends DateModel {
 
     @Column(name = "mobile")
     private String mobile;
-
-    private String imageUrl;
 
     @Column(name = "accountNonExpired")
     private boolean accountNonExpired;
@@ -58,8 +54,10 @@ public final class UserDetails extends DateModel {
     @Column(name = "enabled")
     private Boolean enabled = Boolean.TRUE;
 
-    private String providerId;
-
     @Column(name = "birthdayDate")
     private java.time.LocalDate birthdayDate;
+
+    @JoinColumn(name = "id",referencedColumnName = "id")
+    @OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+    private UserRbac user;
 }

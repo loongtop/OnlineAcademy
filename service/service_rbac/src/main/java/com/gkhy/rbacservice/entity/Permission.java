@@ -1,6 +1,6 @@
 package com.gkhy.rbacservice.entity;
 
-import com.gkhy.rbacservice.entity.permission.Privilege;
+import com.gkhy.rbacservice.entity.privilege.Privilege;
 import com.gkhy.servicebase.basemodel.DateModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * @ClassName Permission
@@ -36,26 +37,15 @@ public final class Permission extends DateModel {
 
     private String name;
 
-    @JoinColumn(name = "id",referencedColumnName = "id")
-    @OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.EAGER)
-    private Privilege privilege;
-
-    private Integer type;
-
-    private String permissionValue;
-
-    private String url;
-
-    private String component;
+    @OneToMany(mappedBy = "permission")
+    private Set<Privilege> privileges = new HashSet<>();
 
     private String icon;
 
-    private Integer status;
+    @Column(name = "privilege_id", nullable = false)
+    private UUID privilegeId;
 
-    private Integer level;
-
-    private boolean isSelect;
-
+    @Column(name = "enabled", nullable = false)
     private Boolean enabled = Boolean.TRUE;
 
     private LocalDateTime expiryTime;
@@ -63,12 +53,11 @@ public final class Permission extends DateModel {
     @Transient
     private List<?> permissions;
 
-    @ManyToMany(mappedBy = "permissions")
+    @ManyToMany(targetEntity = Role.class,
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    @JoinTable(name = "role_permission",
+            joinColumns = {@JoinColumn(name = "role_id")},
+            inverseJoinColumns = {@JoinColumn(name = "permission_id")})
     private Set<Role> roles = new HashSet<>();
-
-    @ManyToMany(targetEntity = Privilege.class, cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
-    @JoinTable(name = "permission_privilege",
-            joinColumns = {@JoinColumn(name = "permission_id"), },
-            inverseJoinColumns = {@JoinColumn(name = "privilege_id")})
-    private Set<Privilege> privileges = new HashSet<>();
 }

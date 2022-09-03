@@ -1,10 +1,13 @@
-package com.gkhy.rbacservice.entity.permission;
+package com.gkhy.rbacservice.entity.privilege;
 
+import com.gkhy.rbacservice.entity.enums.Level;
 import com.gkhy.servicebase.basemodel.DateModel;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @ClassName Resource
@@ -17,6 +20,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class Resource extends DateModel {
 
     private static final long serialVersionUID = 690845200839397661L;
@@ -26,7 +30,13 @@ public class Resource extends DateModel {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "name", nullable = false)
     private String name;
+
+    private Level level = Level.BEGINNER;
+
+    @OneToMany(mappedBy = "resource")
+    private Set<Action> actions = new HashSet<>();
 
     private String description;
 }

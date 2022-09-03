@@ -3,9 +3,9 @@ package com.gkhy.rbacservice.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import com.gkhy.rbacservice.entity.group.GroupInfo;
-import com.gkhy.rbacservice.entity.user.UserDetails;
-import com.gkhy.rbacservice.entity.user.UserMembership;
+import com.gkhy.rbacservice.entity.group.Group;
+import com.gkhy.rbacservice.entity.userDetails.UserDetails;
+import com.gkhy.rbacservice.entity.userDetails.UserMembership;
 import com.gkhy.servicebase.basemodel.DateModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +22,7 @@ import java.util.Set;
 @JsonIgnoreProperties(value = "{password}")
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
-public class RbacUser extends DateModel {
+public class UserRbac extends DateModel {
 
     private static final long serialVersionUID = -3305026565378999693L;
 
@@ -48,15 +48,16 @@ public class RbacUser extends DateModel {
     @Column(name = "description")
     protected String description;
 
-    @Column(name = "enabled")
+    @Column(name = "enabled", nullable = false)
     private Boolean enabled = Boolean.TRUE;
 
-    @JoinColumn(name = "id",referencedColumnName = "id")
-    @OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+    @Column(name = "imageUrl")
+    private String imageUrl;
+
+    @OneToOne(mappedBy = "user")
     private UserDetails userDetails;
 
-    @JoinColumn(name = "id",referencedColumnName = "id")
-    @OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user")
     private UserMembership userMembership;
 
     /**
@@ -81,9 +82,9 @@ public class RbacUser extends DateModel {
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<>();
 
-    @ManyToMany(targetEntity = GroupInfo.class, cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Group.class, cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "user_group",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "group_id")})
-    private Set<GroupInfo> groups = new HashSet<>();
+    private Set<Group> groups = new HashSet<>();
 }

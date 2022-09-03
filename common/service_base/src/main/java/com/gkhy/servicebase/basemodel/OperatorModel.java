@@ -6,7 +6,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
-import java.io.Serializable;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +24,7 @@ public abstract class OperatorModel extends DateModel{
     private String createdBy;
 
     @Column(name = "UPDATED_BY")
-    private String updatedBy;;
+    private String updatedBy;
 }
 
 

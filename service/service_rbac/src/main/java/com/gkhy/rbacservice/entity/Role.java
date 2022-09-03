@@ -1,5 +1,6 @@
 package com.gkhy.rbacservice.entity;
 
+import com.gkhy.rbacservice.entity.enums.Level;
 import com.gkhy.servicebase.basemodel.OperatorModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,20 +34,17 @@ public final class Role extends OperatorModel {
     @Column(name = "name", nullable = false)
     private String name;
 
+    private Level level = Level.BEGINNER;
+
     @Column(name = "description")
     private String description;
 
     @Column(name = "enabled", nullable = false)
     private Boolean enabled = Boolean.TRUE;
 
-    @ManyToMany(targetEntity = Permission.class,
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
-    @JoinTable(name = "role_permission",
-            joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "permission_id")})
+    @ManyToMany(mappedBy = "roles")
     private Set<Permission> permissions = new HashSet<>();
 
     @ManyToMany(mappedBy = "roles")
-    private Set<RbacUser> user = new HashSet<>();
+    private Set<UserRbac> user = new HashSet<>();
 }

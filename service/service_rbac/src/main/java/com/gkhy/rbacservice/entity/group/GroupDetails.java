@@ -20,7 +20,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Entity
-public final class GroupInfoDetails implements Serializable {
+public final class GroupDetails implements Serializable {
 
     private static final long serialVersionUID = 8931546735898823731L;
 
@@ -29,10 +29,9 @@ public final class GroupInfoDetails implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "groupIn_id")
-    private Long groupInfoId;
-
-    private String name;
+    @JoinColumn(name = "id",referencedColumnName = "id")
+    @OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+    private Group group;
 
     private String description;
 
@@ -41,8 +40,8 @@ public final class GroupInfoDetails implements Serializable {
     private int userMemberCount;
 
     @OneToMany
-    private Set<GroupInfoDetails> parentGroups;
+    private Set<GroupDetails> parentGroups;
     @OneToMany
-    private Set<GroupInfoDetails> childGroups;
+    private Set<GroupDetails> childGroups;
 
 }

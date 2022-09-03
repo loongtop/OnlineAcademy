@@ -1,6 +1,6 @@
 package com.gkhy.rbacservice.controller;
 
-import com.gkhy.rbacservice.entity.user.UserDetails;
+import com.gkhy.rbacservice.entity.userDetails.UserDetails;
 import com.gkhy.rbacservice.repository.UserDetailsRepository;
 import com.gkhy.servicebase.controller.ControllerBase;
 import org.springframework.web.bind.annotation.RequestMapping;

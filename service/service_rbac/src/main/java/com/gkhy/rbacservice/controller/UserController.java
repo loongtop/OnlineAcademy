@@ -2,7 +2,7 @@ package com.gkhy.rbacservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.gkhy.commonutils.encryption.MD5;
-import com.gkhy.rbacservice.entity.RbacUser;
+import com.gkhy.rbacservice.entity.UserRbac;
 import com.gkhy.rbacservice.repository.UserRepository;
 import com.gkhy.servicebase.controller.ControllerBase;
 import com.gkhy.rbacservice.service.UserService;
@@ -26,7 +26,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/admin/user/")
-public class UserController extends ControllerBase<RbacUser, Long, UserRepository> {
+public class UserController extends ControllerBase<UserRbac, Long, UserRepository> {
 
     private final UserService userService;
     private final RoleService roleService;
@@ -54,10 +54,10 @@ public class UserController extends ControllerBase<RbacUser, Long, UserRepositor
     @PutMapping("/resetpassword")
     public Result resetPassword(@Valid @PathVariable Long id, @Valid @RequestBody JSONObject password) {
         String oldPwd = MD5.encrypt((String) password.get("oldPassword"));
-        Optional<RbacUser> user = userService.findById(id);
+        Optional<UserRbac> user = userService.findById(id);
         if (!user.isPresent()) return ItemFound.fail();
 
-        RbacUser entity = user.get();
+        UserRbac entity = user.get();
         if (!oldPwd.equals(entity.getPassword())) {
             return Result.fail().data("message", "Password was wrong!");
         }
@@ -68,8 +68,7 @@ public class UserController extends ControllerBase<RbacUser, Long, UserRepositor
             return Result.fail().data("message", "Passwords were different!");
         }
         entity.setPassword(MD5.encrypt((String) password.get("newPassword1")));
-        userService.save(entity);
+        UserRbac userRbac = userService.save(entity);
         return Result.success().data("message", "Passwords change successfully!");
-
     }
 }

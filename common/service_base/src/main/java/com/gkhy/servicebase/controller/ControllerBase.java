@@ -6,7 +6,6 @@ import com.gkhy.servicebase.controller.helper.EntityIsEnabled;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.servicebase.service.repository.IService;
 import com.gkhy.servicebase.utils.ItemFound;
-import lombok.SneakyThrows;
 import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +18,14 @@ import javax.validation.Valid;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
+import lombok.SneakyThrows;
+
 /**
  * ControllerBase for all the controller to extends
  */
 
 public abstract class ControllerBase<T, E extends Number, Repository extends IService<T, E>>
-        implements IControllerBase<T, E> {
+        implements IControllerBase<E> {
 
     private final Repository repository;
 
@@ -44,9 +45,10 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     //Add a record(row) to the table
     @PostMapping("/add")
     public Result add(@Valid @RequestBody JSONObject obj) {
+
         // Encrypt before storing for password
         if (obj.containsKey("password")) {
-            String passwordMD5  = MD5.encrypt((String) obj.get("password"));
+            String passwordMD5  = MD5.encrypt(String.valueOf(obj.get("password")));
             obj.replace("password", passwordMD5);
         }
 
@@ -89,7 +91,11 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     @PutMapping("/update")
     public Result update(@Valid @RequestBody JSONObject obj) {
 
-        E id = (E) obj.get("id");
+        if (!obj.containsKey("id")) {
+            return Result.fail().data("message", "There is no id in the object form frontend!");
+        }
+
+        final E id = (E) obj.get("id");
         return updateById(id, obj);
     }
 
