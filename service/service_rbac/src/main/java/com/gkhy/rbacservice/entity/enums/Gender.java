@@ -3,11 +3,9 @@ package com.gkhy.rbacservice.entity.enums;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 /**
- * @Name: Level
- * @Description: the level of resource, action, role
+ * @Name: Gender
+ * @Description:
  * @Author: leo
  * @Created: 2022-09-03
  * @Updated: 2022-09-03
@@ -15,13 +13,12 @@ import java.io.Serializable;
  **/
 @Getter
 @NoArgsConstructor
-public enum Level implements Serializable {
-    BEGINNER,
-    INTERMEDIATE,
-    ADVANCE,
+public enum Gender {
+    NONE,
+    FEMALE,
+    MALE,
     ;
 
     private static final long serialVersionUID = -3305026565378999693L;
-
     private Integer level;
 }

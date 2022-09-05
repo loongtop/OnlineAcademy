@@ -1,12 +1,15 @@
 package com.gkhy.rbacservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gkhy.rbacservice.entity.enums.Level;
 import com.gkhy.servicebase.basemodel.OperatorModel;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,6 +24,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+@JsonIgnoreProperties(value = {"user"})
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "name"}) })
 public final class Role extends OperatorModel {
 
@@ -42,9 +46,9 @@ public final class Role extends OperatorModel {
     @Column(name = "enabled", nullable = false)
     private Boolean enabled = Boolean.TRUE;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<Permission> permissions = new HashSet<>();
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<UserRbac> user = new HashSet<>();
 }

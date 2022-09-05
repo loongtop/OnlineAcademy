@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/admin/rbac/index")
+@RequestMapping("/admin/index")
 public class IndexController {
 
     private IndexService indexService;

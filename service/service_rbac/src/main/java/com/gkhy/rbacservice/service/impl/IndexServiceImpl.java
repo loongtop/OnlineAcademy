@@ -11,7 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-
+/**
+ * @Name: IndexServiceImpl
+ * @Description:
+ * @Author: leo
+ * @Created: 2022-09-03
+ * @Updated: 2022-09-03
+ * @Version: 1.0
+ **/
 @Service
 public class IndexServiceImpl implements IndexService {
 
@@ -35,14 +42,14 @@ public class IndexServiceImpl implements IndexService {
         UserRbac user = optionalUser
                 .orElseThrow(()->new NoSuchElementException(String.format("Can not find User bu name %s", username)));
 
-//        List<Role> roleList = roleService.findById(user.getId()));
+//        Set<Role> roleList = roleService.findById(user.getId()));
 //
-//        List<String> roleNameList = roleList.stream().map(item -> item.getRoleName()).collect(Collectors.toList());
+//        Set<String> roleNameList = roleList.stream().map(item -> item.getRoleName()).collect(Collectors.toList());
 //        if (roleNameList.size() == 0) {
 //            roleNameList.add("");
 //        }
 //
-//        List<Long> permissionValueList = permissionService.findById(user.getId());
+//        Set<Long> permissionValueList = permissionService.findById(user.getId());
 //        redisService.set(username, permissionValueList);
 
 //        Map<String, Object> result = new HashMap<>();

@@ -14,4 +14,8 @@ public interface RoleService {
     Optional<Role> findById(Long userId);
 
     void saveUserRoleRelationShip(Long userId, Long[] roleId);
+
+    Role save(Role role);
+
+    List<Role> findAllById(Iterable<Long> roleIds);
 }

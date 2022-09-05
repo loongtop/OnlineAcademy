@@ -1,10 +1,11 @@
 package com.gkhy.rbacservice.repository;
 
+import com.gkhy.rbacservice.entity.group.GroupDetails;
 import com.gkhy.servicebase.service.IRepositoryBase;
-import com.gkhy.rbacservice.entity.Permission;
 import org.springframework.stereotype.Repository;
+
 /**
- * @Name: PermissionRepository
+ * @Name: GroupDetailsRepository
  * @Description:
  * @Author: leo
  * @Created: 2022-09-03
@@ -12,5 +13,5 @@ import org.springframework.stereotype.Repository;
  * @Version: 1.0
  **/
 @Repository
-public interface PermissionRepository extends IRepositoryBase<Permission, Long> {
+public interface GroupDetailsRepository extends IRepositoryBase<GroupDetails, Long> {
 }

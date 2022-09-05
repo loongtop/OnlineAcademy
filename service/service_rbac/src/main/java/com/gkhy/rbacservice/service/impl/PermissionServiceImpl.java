@@ -7,7 +7,14 @@ import com.gkhy.rbacservice.repository.PermissionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+/**
+ * @Name: PermissionServiceImpl
+ * @Description:
+ * @Author: leo
+ * @Created: 2022-09-03
+ * @Updated: 2022-09-03
+ * @Version: 1.0
+ **/
 @Service
 public class PermissionServiceImpl
         extends ServiceImpl<Permission, Long, PermissionRepository> implements PermissionService {
@@ -20,7 +27,6 @@ public class PermissionServiceImpl
     public List<Permission> queryAllMenu() {
         return null;
     }
-
 
     @Override
     public void saveRolePermissionEntityRelationShip(Long roleId, Long[] permissionEntityId) {

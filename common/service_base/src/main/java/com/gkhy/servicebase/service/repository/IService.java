@@ -19,6 +19,8 @@ public interface IService<T, E extends Number> {
 
     List<T> findAll(Specification<T> spec, Sort sort);
 
+    List<T> findAllById(Iterable<E> ids);
+
     long count(Specification<T> spec);
 
     boolean exists(Specification<T> spec);

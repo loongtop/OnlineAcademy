@@ -13,13 +13,15 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Setter
 @Getter
 @NoArgsConstructor
-@JsonIgnoreProperties(value = "{password}")
+@JsonIgnoreProperties(value = {"password", "userDetails", "userMembership"})
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public class UserRbac extends DateModel {

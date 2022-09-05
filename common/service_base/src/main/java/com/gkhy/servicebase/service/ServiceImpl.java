@@ -66,6 +66,10 @@ public abstract class ServiceImpl<T, E extends Number, Repository extends IServi
         return iRepository.findAll(pageable);
     }
 
+    public List<T> findAllById(Iterable<E> ids){
+        return iRepository.findAllById(ids);
+    }
+
     public Optional<T> findById(E e) {
         return iRepository.findById(e);
     }
@@ -156,4 +160,5 @@ public abstract class ServiceImpl<T, E extends Number, Repository extends IServi
     public boolean existsByColumnName(String columnName, String value) {
         return iRepository.exists(getSpecification(columnName, value));
     }
+
 }

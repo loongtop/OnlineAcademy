@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/rbac/permission")
+@RequestMapping("/admin/permission")
 public class PermissionController extends ControllerBase<Permission, Long, PermissionRepository> {
 
     private final PermissionService permissionService;
@@ -40,4 +40,6 @@ public class PermissionController extends ControllerBase<Permission, Long, Permi
         List<Permission> list = permissionService.selectAllMenu(roleId);
         return Result.success().data("children", list);
     }
+
+
 }

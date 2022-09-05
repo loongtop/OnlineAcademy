@@ -116,7 +116,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     @DeleteMapping("/batchRemove")
     public Result removeByIds(@Valid @RequestParam("ids") List<E> ids) {
 
-        List<E> unableRemoved = new ArrayList<>();
+        Set<E> unableRemoved = new HashSet<>();
         ids.forEach(id -> {
             Result t = remove(id);
             if (t.isFail()) unableRemoved.add(id);
@@ -143,7 +143,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     @DeleteMapping("/batchDelete")
     public Result deleteByIds(@Valid @RequestParam("ids") List<E> ids) {
 
-        List<E> unableDeleted = new ArrayList<>();
+        Set<E> unableDeleted = new HashSet<>();
         ids.forEach(id -> {
             if (!repository.existsById(id)) unableDeleted.add(id);
         });
@@ -180,7 +180,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
      * @Date: 2022-09-01
      */
     @SneakyThrows
-    private T JSONObjectToT(JSONObject jsonObject) {
+    protected T JSONObjectToT(JSONObject jsonObject) {
         ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
         final String className = parameterizedType.getActualTypeArguments()[0].getTypeName();
 

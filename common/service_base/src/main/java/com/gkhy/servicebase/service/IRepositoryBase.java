@@ -5,7 +5,6 @@ import com.gkhy.servicebase.service.repository.IService;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.transaction.annotation.Transactional;
 
-//@Transactional
 @NoRepositoryBean
 public interface IRepositoryBase<T, E extends Number> extends
         IService<T, E>,

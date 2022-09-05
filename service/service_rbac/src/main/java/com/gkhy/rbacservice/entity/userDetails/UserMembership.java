@@ -1,5 +1,6 @@
 package com.gkhy.rbacservice.entity.userDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gkhy.rbacservice.entity.UserRbac;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @NoArgsConstructor
+@JsonIgnoreProperties({"user", "passwordAnswer"})
 @Entity
 public final class UserMembership {
 

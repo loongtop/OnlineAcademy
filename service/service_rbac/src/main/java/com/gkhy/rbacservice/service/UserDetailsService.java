@@ -1,5 +1,7 @@
 package com.gkhy.rbacservice.service;
 
+import com.gkhy.rbacservice.entity.userDetails.UserDetails;
+
 /**
  * @ClassName: UserDetailsService
  * @Description:
@@ -9,4 +11,5 @@ package com.gkhy.rbacservice.service;
  * @Version: 1.0
  **/
 public interface UserDetailsService {
+    UserDetails save(UserDetails userDetails);
 }

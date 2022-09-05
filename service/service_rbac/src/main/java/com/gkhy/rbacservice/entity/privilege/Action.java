@@ -33,13 +33,14 @@ public class Action extends OperatorModel {
     @Column(nullable = false)
     private String name;
 
+    @Enumerated(EnumType.ORDINAL)
     private Level level = Level.BEGINNER;
 
     private String description;
 
     @ManyToOne(targetEntity = Resource.class, cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "resource_action",
-            joinColumns = {@JoinColumn(name = "resource_id"), },
-            inverseJoinColumns = {@JoinColumn(name = "action_id")})
+            joinColumns = {@JoinColumn(name = "action_id"), },
+            inverseJoinColumns = {@JoinColumn(name = "resource_id")})
     private Resource resource;
 }

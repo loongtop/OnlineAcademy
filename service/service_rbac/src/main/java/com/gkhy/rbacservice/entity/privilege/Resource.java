@@ -33,9 +33,10 @@ public class Resource extends DateModel {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Enumerated(EnumType.ORDINAL)
     private Level level = Level.BEGINNER;
 
-    @OneToMany(mappedBy = "resource")
+    @OneToMany(mappedBy = "resource", fetch = FetchType.EAGER)
     private Set<Action> actions = new HashSet<>();
 
     private String description;

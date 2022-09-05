@@ -1,5 +1,6 @@
 package com.gkhy.rbacservice.entity.privilege;
 
+
 import com.gkhy.rbacservice.entity.Permission;
 import com.gkhy.servicebase.basemodel.DateModel;
 import lombok.Getter;
@@ -18,10 +19,10 @@ public class Privilege extends DateModel {
     @Id
     private Long id;
 
-    @ManyToOne(targetEntity = Permission.class, cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = Permission.class, cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(name = "permission_privilege",
-            joinColumns = {@JoinColumn(name = "permission_id"), },
-            inverseJoinColumns = {@JoinColumn(name = "privilege_id")})
+            joinColumns = {@JoinColumn(name = "privilege_id"), },
+            inverseJoinColumns = {@JoinColumn(name = "permission_id")})
     private Permission permission;
 
     @Column(name = "name", nullable = false)

@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * <p>
@@ -25,7 +27,7 @@ import java.util.Optional;
  * @since 2022-07-08
  */
 @RestController
-@RequestMapping("/admin/user/")
+@RequestMapping("/admin/user")
 public class UserController extends ControllerBase<UserRbac, Long, UserRepository> {
 
     private final UserService userService;
@@ -37,7 +39,6 @@ public class UserController extends ControllerBase<UserRbac, Long, UserRepositor
         this.userService = userService;
         this.roleService = roleService;
     }
-
 
     @GetMapping("/toAssign/{UserId}")
     public Result toAssign(@PathVariable Long UserId) {
@@ -51,9 +52,9 @@ public class UserController extends ControllerBase<UserRbac, Long, UserRepositor
         return Result.success();
     }
 
-    @PutMapping("/resetpassword")
+    @PutMapping("/resetpassword/{id}")
     public Result resetPassword(@Valid @PathVariable Long id, @Valid @RequestBody JSONObject password) {
-        String oldPwd = MD5.encrypt((String) password.get("oldPassword"));
+        String oldPwd = MD5.encrypt((String) password.get("PASSWORD0"));
         Optional<UserRbac> user = userService.findById(id);
         if (!user.isPresent()) return ItemFound.fail();
 
@@ -62,13 +63,50 @@ public class UserController extends ControllerBase<UserRbac, Long, UserRepositor
             return Result.fail().data("message", "Password was wrong!");
         }
 
-        String newPassword1 = (String) password.get("password1");
-        String newPassword2 = (String) password.get("password2");
+        String newPassword1 = (String) password.get("PASSWORD1");
+        String newPassword2 = (String) password.get("PASSWORD2");
         if (!newPassword1.equals(newPassword2)) {
             return Result.fail().data("message", "Passwords were different!");
         }
-        entity.setPassword(MD5.encrypt((String) password.get("newPassword1")));
+        entity.setPassword(MD5.encrypt((String) password.get("PASSWORD1")));
         UserRbac userRbac = userService.save(entity);
         return Result.success().data("message", "Passwords change successfully!");
     }
+
+    @PostMapping("/addRoles/{id}")
+    public Result addRoles(@Valid @PathVariable Long id, @Valid @RequestParam("ids") List<Long> ids) {
+        Optional<UserRbac> user = userService.findById(id);
+        if (user.isEmpty()) ItemFound.fail().data("message", "Can not find Group in the database!");
+
+        List<Role> roleList = roleService.findAllById(ids);
+        UserRbac entity = user.get();
+        roleList.forEach(r->{
+            entity.getRoles().add(r);
+            r.getUser().add(entity);
+            roleService.save(r);
+        });
+
+        userService.save(entity);
+
+        return Result.success().data("item", entity);
+    }
+
+    @DeleteMapping("/removeRoles/{id}")
+    public Result removeRoles(@Valid @PathVariable Long id, @Valid @RequestParam("ids") List<Long> ids) {
+        Optional<UserRbac> user = userService.findById(id);
+        if (user.isEmpty()) ItemFound.fail().data("message", "Can not find user in the database!");
+
+        UserRbac entity = user.get();
+        Set<Role> roleSet = entity.getRoles();
+        List<Role> roleList = roleService.findAllById(ids);
+        roleList.forEach(role -> {
+            role.getUser().remove(entity);
+            roleService.save(role);
+            roleSet.remove(role);
+        });
+
+        userService.save(entity);
+        return Result.success().data("item", entity);
+    }
+
 }

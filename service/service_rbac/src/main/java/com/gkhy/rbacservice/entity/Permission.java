@@ -1,5 +1,6 @@
 package com.gkhy.rbacservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gkhy.rbacservice.entity.privilege.Privilege;
 import com.gkhy.servicebase.basemodel.DateModel;
 import lombok.Getter;
@@ -9,7 +10,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -25,6 +25,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @Entity
+@JsonIgnoreProperties(value = {"roles", "privilege"})
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
 public final class Permission extends DateModel {
 
@@ -37,8 +38,8 @@ public final class Permission extends DateModel {
 
     private String name;
 
-    @OneToMany(mappedBy = "permission")
-    private Set<Privilege> privileges = new HashSet<>();
+    @OneToOne(mappedBy = "permission", fetch = FetchType.EAGER)
+    private Privilege privilege;
 
     private String icon;
 
@@ -51,13 +52,13 @@ public final class Permission extends DateModel {
     private LocalDateTime expiryTime;
 
     @Transient
-    private List<?> permissions;
+    private Set<?> permissions;
 
     @ManyToMany(targetEntity = Role.class,
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
     @JoinTable(name = "role_permission",
-            joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "permission_id")})
+            joinColumns = {@JoinColumn(name = "permission_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<>();
 }

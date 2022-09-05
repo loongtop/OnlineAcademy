@@ -6,7 +6,16 @@ import com.gkhy.rbacservice.repository.RoleRepository;
 import com.gkhy.rbacservice.service.RoleService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
+/**
+ * @Name: RoleServiceImpl
+ * @Description:
+ * @Author: leo
+ * @Created: 2022-09-03
+ * @Updated: 2022-09-03
+ * @Version: 1.0
+ **/
 @Service
 public class RoleServiceImpl
         extends ServiceImpl<Role, Long, RoleRepository> implements RoleService {
@@ -17,6 +26,7 @@ public class RoleServiceImpl
 
     @Override
     public void saveUserRoleRelationShip(Long userId, Long[] roleId) {
-
     }
+
+
 }

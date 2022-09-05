@@ -18,7 +18,7 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class UUID {
 
-    public static String generate() {
-        return java.util.UUID.randomUUID().toString();
+    public static java.util.UUID generate() {
+        return java.util.UUID.randomUUID();
     }
 }

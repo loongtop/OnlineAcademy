@@ -1,6 +1,8 @@
 package com.gkhy.rbacservice.entity.userDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gkhy.rbacservice.entity.UserRbac;
+import com.gkhy.rbacservice.entity.enums.Gender;
 import com.gkhy.servicebase.basemodel.DateModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @NoArgsConstructor
+@JsonIgnoreProperties(value = "{user}")
 @Entity
 public final class UserDetails extends DateModel {
 
@@ -31,7 +34,7 @@ public final class UserDetails extends DateModel {
     private Long id;
 
     @Column(name = "gender")
-    private String gender;
+    private Gender gender;
 
     @Column(name = "age")
     private Integer age;
@@ -60,4 +63,5 @@ public final class UserDetails extends DateModel {
     @JoinColumn(name = "id",referencedColumnName = "id")
     @OneToOne(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
     private UserRbac user;
+
 }
