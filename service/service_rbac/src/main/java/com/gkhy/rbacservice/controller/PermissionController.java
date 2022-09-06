@@ -22,8 +22,7 @@ public class PermissionController extends ControllerBase<Permission, Long, Permi
         this.permissionService = permissionService;
     }
 
-
-    @GetMapping
+    @GetMapping("/query")
     public Result indexAllPermissionEntity() {
         List<Permission> list = permissionService.queryAllMenu();
         return Result.success().data("children", list);
@@ -41,5 +40,11 @@ public class PermissionController extends ControllerBase<Permission, Long, Permi
         return Result.success().data("children", list);
     }
 
-
+    @PostMapping("/allEnabled")
+    public Result testPermission() {
+//        List<Permission> permissions = permissionService.findAllEnabled();
+//        Permission permission = permissionService.findByName("permission1");
+        System.out.println("test-permission");
+        return Result.success().data("permission",null);
+    }
 }

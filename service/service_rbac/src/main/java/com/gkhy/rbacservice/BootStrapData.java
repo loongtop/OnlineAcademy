@@ -58,7 +58,6 @@ public class BootStrapData implements CommandLineRunner {
         String name = "resource";
 
         String actionName = "action";
-
 //        for (int i = 1; i < 6; i++) {
 
 //            Set<Action> actions = new HashSet<>();

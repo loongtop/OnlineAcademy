@@ -32,5 +32,4 @@ public class Privilege extends DateModel {
     private UUID privilegeId;
 
     private String description;
-
 }

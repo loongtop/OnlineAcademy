@@ -52,27 +52,6 @@ public class UserController extends ControllerBase<UserRbac, Long, UserRepositor
         return Result.success();
     }
 
-    @PutMapping("/resetpassword/{id}")
-    public Result resetPassword(@Valid @PathVariable Long id, @Valid @RequestBody JSONObject password) {
-        String oldPwd = MD5.encrypt((String) password.get("PASSWORD0"));
-        Optional<UserRbac> user = userService.findById(id);
-        if (!user.isPresent()) return ItemFound.fail();
-
-        UserRbac entity = user.get();
-        if (!oldPwd.equals(entity.getPassword())) {
-            return Result.fail().data("message", "Password was wrong!");
-        }
-
-        String newPassword1 = (String) password.get("PASSWORD1");
-        String newPassword2 = (String) password.get("PASSWORD2");
-        if (!newPassword1.equals(newPassword2)) {
-            return Result.fail().data("message", "Passwords were different!");
-        }
-        entity.setPassword(MD5.encrypt((String) password.get("PASSWORD1")));
-        UserRbac userRbac = userService.save(entity);
-        return Result.success().data("message", "Passwords change successfully!");
-    }
-
     @PostMapping("/addRoles/{id}")
     public Result addRoles(@Valid @PathVariable Long id, @Valid @RequestParam("ids") List<Long> ids) {
         Optional<UserRbac> user = userService.findById(id);

@@ -64,4 +64,10 @@ public interface IService<T, E extends Number> {
     <S extends T> S saveAndFlush(S entity);
 
     <S extends T> List<S> saveAllAndFlush(Iterable<S> entities);
+
+//    @Query(value = "select e from #{#entityName} e where e.enabled=true")
+//    List<T> findAllEnabled();
+
+//    @Query(value = "select e from #{#entityName} e where e.name=?1")
+//    T findByName(String name);
 }
