@@ -1,6 +1,7 @@
 package com.gkhy.rbacservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.gkhy.rbacservice.url.Url;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.rbacservice.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class IndexController {
 
-    private IndexService indexService;
+    private final IndexService indexService;
     @Autowired
     public IndexController(IndexService indexService) {
         this.indexService = indexService;

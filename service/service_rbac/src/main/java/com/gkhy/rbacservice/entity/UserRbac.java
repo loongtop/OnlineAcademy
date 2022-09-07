@@ -87,4 +87,10 @@ public class UserRbac extends DateModel {
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "group_id")})
     private Set<Group> groups = new HashSet<>();
+
+    @ManyToMany(targetEntity = Department.class, cascade = {CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_department",
+            joinColumns = {@JoinColumn(name = "user_id"), },
+            inverseJoinColumns = {@JoinColumn(name = "department_id")})
+    private Set<Department> departments = new HashSet<>();
 }

@@ -1,5 +1,6 @@
 package com.gkhy.rbacservice.entity.group;
 
+import com.gkhy.rbacservice.entity.Permission;
 import com.gkhy.rbacservice.entity.UserRbac;
 import com.gkhy.servicebase.basemodel.OperatorModel;
 import lombok.Getter;
@@ -47,4 +48,10 @@ public class Group extends OperatorModel {
 
     @Column(name = "description")
     protected String description;
+
+    @ManyToMany(mappedBy = "groups", fetch = FetchType.EAGER)
+    private Set<Permission> permissions = new HashSet<>();
+
+    @ManyToMany(mappedBy = "groups", fetch = FetchType.EAGER)
+    private Set<UserRbac> user = new HashSet<>();
 }

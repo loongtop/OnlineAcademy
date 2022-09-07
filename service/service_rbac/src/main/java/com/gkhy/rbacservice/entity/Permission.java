@@ -1,6 +1,7 @@
 package com.gkhy.rbacservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.gkhy.rbacservice.entity.group.Group;
 import com.gkhy.rbacservice.entity.privilege.Privilege;
 import com.gkhy.servicebase.basemodel.DateModel;
 import lombok.Getter;
@@ -61,4 +62,20 @@ public final class Permission extends DateModel {
             joinColumns = {@JoinColumn(name = "permission_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany(targetEntity = Department.class,
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    @JoinTable(name = "department_permission",
+            joinColumns = {@JoinColumn(name = "permission_id")},
+            inverseJoinColumns = {@JoinColumn(name = "department_id")})
+    private Set<Department> departments = new HashSet<>();
+
+    @ManyToMany(targetEntity = Group.class,
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    @JoinTable(name = "group_permission",
+            joinColumns = {@JoinColumn(name = "permission_id")},
+            inverseJoinColumns = {@JoinColumn(name = "group_id")})
+    private Set<Group> groups = new HashSet<>();
 }

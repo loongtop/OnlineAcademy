@@ -6,12 +6,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class,
         MultipartAutoConfiguration.class,
         WebMvcAutoConfiguration.class})
 @ComponentScan(basePackages = {"com.gkhy"})
+@EnableDiscoveryClient
+@EnableFeignClients
 public class OssApplication {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(OssApplication.class);
