@@ -5,12 +5,9 @@ import com.gkhy.eduservice.entity.vo.TeacherVo;
 import com.gkhy.eduservice.repository.TeacherRepository;
 import com.gkhy.eduservice.service.TeacherService;
 import com.gkhy.servicebase.controller.ControllerBase;
-import com.gkhy.servicebase.redis.RedisService;
 import com.gkhy.servicebase.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 /**

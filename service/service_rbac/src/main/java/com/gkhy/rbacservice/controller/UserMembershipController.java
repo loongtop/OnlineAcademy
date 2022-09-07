@@ -2,10 +2,8 @@ package com.gkhy.rbacservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.gkhy.rbacservice.entity.UserRbac;
-import com.gkhy.rbacservice.entity.userDetails.UserDetails;
 import com.gkhy.rbacservice.entity.userDetails.UserMembership;
 import com.gkhy.rbacservice.repository.UserMembershipRepository;
-import com.gkhy.rbacservice.service.UserDetailsService;
 import com.gkhy.rbacservice.service.UserMembershipService;
 import com.gkhy.rbacservice.service.UserService;
 import com.gkhy.servicebase.controller.ControllerBase;
@@ -25,7 +23,7 @@ import java.util.Optional;
  * @Version: 1.0
  **/
 @RestController
-@RequestMapping("/admin/usermembership")
+@RequestMapping("/admin/membership")
 public class UserMembershipController extends ControllerBase<UserMembership, Long, UserMembershipRepository> {
 
     private final UserService userService;

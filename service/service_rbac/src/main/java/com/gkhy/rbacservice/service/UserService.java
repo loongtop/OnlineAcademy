@@ -12,4 +12,6 @@ public interface UserService {
     Optional<UserRbac> findById(Long id);
 
     UserRbac save(UserRbac entity);
+
+    boolean existsByColumnName(String email, String email1);
 }

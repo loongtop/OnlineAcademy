@@ -1,8 +1,23 @@
 spring:
-    jpa:
+  jpa:
       show-sql: true
       hibernate:
         ddl-auto: update
       properties:
         hibernate:
           dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  mvc:
+    static-path-pattern: /**
+
+          #
+          #  classpath:/META-INF/resources/"
+          #
+          #  "classpath:/resources/"
+          #
+          #  "classpath:/static/"
+          #
+          #  "classpath:/public/"
+          #
+          #  spring.resources.static-locations=classpath:/coding/,classpath:/kuang/
+          #

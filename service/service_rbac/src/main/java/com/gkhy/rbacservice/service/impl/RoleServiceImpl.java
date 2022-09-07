@@ -6,8 +6,6 @@ import com.gkhy.rbacservice.repository.RoleRepository;
 import com.gkhy.rbacservice.service.RoleService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * @Name: RoleServiceImpl
  * @Description:

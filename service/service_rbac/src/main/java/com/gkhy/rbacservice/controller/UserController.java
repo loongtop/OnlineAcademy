@@ -1,7 +1,5 @@
 package com.gkhy.rbacservice.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.gkhy.commonutils.encryption.MD5;
 import com.gkhy.rbacservice.entity.UserRbac;
 import com.gkhy.rbacservice.repository.UserRepository;
 import com.gkhy.servicebase.controller.ControllerBase;

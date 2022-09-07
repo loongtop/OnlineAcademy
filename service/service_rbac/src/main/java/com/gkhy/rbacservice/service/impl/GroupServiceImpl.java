@@ -1,14 +1,10 @@
 package com.gkhy.rbacservice.service.impl;
 
 import com.gkhy.rbacservice.entity.group.Group;
-import com.gkhy.rbacservice.entity.group.GroupDetails;
-import com.gkhy.rbacservice.repository.GroupDetailsRepository;
 import com.gkhy.rbacservice.repository.GroupRepository;
 import com.gkhy.rbacservice.service.GroupService;
 import com.gkhy.servicebase.service.ServiceImpl;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 /**
  * @Name: GroupServiceImpl

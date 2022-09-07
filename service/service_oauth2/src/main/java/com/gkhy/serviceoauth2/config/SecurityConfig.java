@@ -36,14 +36,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public SecurityConfig(UserService userService, OAuth2UserService oAuth2UserService, OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler, OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler, HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository) {
+    public SecurityConfig(UserService userService, OAuth2UserService oAuth2UserService, OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler, OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler, HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.oAuth2UserService = oAuth2UserService;
         this.oAuth2AuthenticationSuccessHandler = oAuth2AuthenticationSuccessHandler;
         this.oAuth2AuthenticationFailureHandler = oAuth2AuthenticationFailureHandler;
         this.httpCookieOAuth2AuthorizationRequestRepository = httpCookieOAuth2AuthorizationRequestRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Bean
@@ -61,10 +62,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new HttpCookieOAuth2AuthorizationRequestRepository();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
@@ -77,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder
                 .userDetailsService(userService)
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder);
     }
 
     @Override

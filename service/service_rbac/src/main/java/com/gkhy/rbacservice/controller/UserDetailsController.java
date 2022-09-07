@@ -2,8 +2,6 @@ package com.gkhy.rbacservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.gkhy.rbacservice.entity.UserRbac;
-import com.gkhy.rbacservice.entity.group.Group;
-import com.gkhy.rbacservice.entity.group.GroupDetails;
 import com.gkhy.rbacservice.entity.userDetails.UserDetails;
 import com.gkhy.rbacservice.repository.UserDetailsRepository;
 import com.gkhy.rbacservice.service.UserDetailsService;

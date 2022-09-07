@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/admin/index")
+@RequestMapping("/admin")
 public class IndexController {
 
     private IndexService indexService;
@@ -23,21 +23,21 @@ public class IndexController {
         this.indexService = indexService;
     }
 
-    @GetMapping("info")
+    @GetMapping("/info")
     public Result info(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Map<String, Object> userInfo = indexService.getUserInfo(username);
         return Result.success().data(userInfo);
     }
 
-    @GetMapping("menu")
+    @GetMapping("/menu")
     public Result getMenu(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<JSONObject> permissionList = indexService.getMenu(username);
         return Result.success().data("permissionList", permissionList);
     }
 
-    @PostMapping("logout")
+    @PostMapping("/logout")
     public Result logout(){
         return Result.success();
     }

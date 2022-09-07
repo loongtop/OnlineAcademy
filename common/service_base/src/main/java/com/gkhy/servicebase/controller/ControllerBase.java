@@ -1,7 +1,6 @@
 package com.gkhy.servicebase.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.gkhy.commonutils.encryption.MD5;
 import com.gkhy.servicebase.controller.helper.EntityIsEnabled;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.servicebase.service.repository.IService;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,6 +28,8 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
         implements IControllerBase<E> {
 
     private final Repository repository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public ControllerBase(Repository repository) {
@@ -48,7 +50,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
 
         // Encrypt before storing for password
         if (obj.containsKey("password")) {
-            String passwordMD5  = MD5.encrypt(String.valueOf(obj.get("password")));
+            String passwordMD5  = passwordEncoder.encode(String.valueOf(obj.get("password")));
             obj.replace("password", passwordMD5);
         }
 

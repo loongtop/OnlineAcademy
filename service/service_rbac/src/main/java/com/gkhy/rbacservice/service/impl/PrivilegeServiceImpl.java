@@ -1,8 +1,6 @@
 package com.gkhy.rbacservice.service.impl;
 
-import com.gkhy.rbacservice.entity.group.Group;
 import com.gkhy.rbacservice.entity.privilege.Privilege;
-import com.gkhy.rbacservice.repository.GroupRepository;
 import com.gkhy.rbacservice.repository.PrivilegeRepository;
 import com.gkhy.rbacservice.service.PrivilegeService;
 import com.gkhy.servicebase.service.ServiceImpl;
