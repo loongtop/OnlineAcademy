@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
  * @Version: 1.0
  **/
 @Repository
-public interface PermissionRepository extends IRepositoryBase<Permission, Long> {
+public interface PermissionRepository extends IRepositoryBase<Permission> {
 }

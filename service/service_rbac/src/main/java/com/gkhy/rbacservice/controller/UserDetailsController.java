@@ -24,7 +24,7 @@ import java.util.Optional;
  **/
 @RestController
 @RequestMapping("/admin/userdetails")
-public class UserDetailsController extends ControllerBase<UserDetails, Long, UserDetailsRepository> {
+public class UserDetailsController extends ControllerBase<UserDetails, UserDetailsRepository> {
 
     private final UserService userService;
     private final UserDetailsService userDetailsService;

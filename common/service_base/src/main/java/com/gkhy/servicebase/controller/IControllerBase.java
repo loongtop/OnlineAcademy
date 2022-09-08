@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public interface IControllerBase<T, E> {
+public interface IControllerBase<T> {
     //Query all rows(data) from the table
     @GetMapping("/all")
     List<T> findAll();
@@ -34,11 +34,11 @@ public interface IControllerBase<T, E> {
 
     //Query by id
     @GetMapping("/get/{id}")
-    Object getById(@PathVariable @Min(1) E id);
+    Object getById(@PathVariable @Min(1) Long id);
 
     //update a record(row)
     @PutMapping("/update/{id}")
-    Object updateById(@PathVariable @Min(1) E id, @RequestBody @NotEmpty JSONObject obj);
+    Object updateById(@PathVariable @Min(1) Long id, @RequestBody @NotEmpty JSONObject obj);
 
     //update a record(row) by entity
     @PutMapping("/update")
@@ -46,19 +46,19 @@ public interface IControllerBase<T, E> {
 
     //logically remove a record(row) (enabled = false)
     @DeleteMapping("/remove/{id}")
-    Object remove(@PathVariable @Min(1) E id);
+    Object remove(@PathVariable @Min(1) Long id);
 
     //logically remove records(rows) (enabled = false)
     @DeleteMapping("/batchRemove")
-    Result removeByIds(@RequestParam("ids") @NotEmpty List<E> ids);
+    Result removeByIds(@RequestParam("ids") @NotEmpty List<Long> ids);
 
     //delete a record(row) from the table, Unable to restore
     @DeleteMapping("/delete/{id}")
-    Result delete(@PathVariable @Min(1) E id);
+    Result delete(@PathVariable @Min(1) Long id);
 
     //delete records(rows) from the table, Unable to restore
     @DeleteMapping("/batchDelete")
-    Result deleteByIds(@RequestParam("ids") @NotEmpty List<E> ids);
+    Result deleteByIds(@RequestParam("ids") @NotEmpty List<Long> ids);
 
     @GetMapping("page/{current}/{limit}")
     Result getByPage(@PathVariable @Min(1) int current, @PathVariable @Min(1)int limit);

@@ -10,6 +10,7 @@ import com.gkhy.rbacservice.service.RoleService;
 import com.gkhy.servicebase.result.status.StatusCode;
 import com.gkhy.servicebase.utils.ItemFound;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
@@ -28,7 +29,7 @@ import java.util.Set;
  */
 @RestController
 @RequestMapping("/admin/user")
-public class UserController extends ControllerBase<UserRbac, Long, UserRepository> {
+public class UserController extends ControllerBase<UserRbac, UserRepository> {
 
     private final UserService userService;
     private final RoleService roleService;
@@ -44,12 +45,13 @@ public class UserController extends ControllerBase<UserRbac, Long, UserRepositor
     public Result addRoles(@PathVariable @Min(1) Long id, @RequestParam("ids") @NotNull List<Long> ids) {
         Optional<UserRbac> user = userService.findById(id);
         if (user.isEmpty()) Result.fail().codeAndMessage(StatusCode.ITEM_NOT_FOUND_ERROR);
+        UserRbac entity = user.get();
 
         List<Role> roleList = roleService.findAllById(ids);
 
         if (roleList.size() <= 0) return ItemFound.fail();
 
-        UserRbac entity = user.get();
+
         roleList.forEach(r->{
             entity.getRoles().add(r);
             r.getUser().add(entity);

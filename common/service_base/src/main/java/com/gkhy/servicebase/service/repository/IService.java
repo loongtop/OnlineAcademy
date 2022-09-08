@@ -9,7 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.List;
 import java.util.Optional;
 
-public interface IService<T, E extends Number> {
+public interface IService<T> {
 
     Optional<T> findOne(Specification<T> spec);
 
@@ -19,7 +19,7 @@ public interface IService<T, E extends Number> {
 
     List<T> findAll(Specification<T> spec, Sort sort);
 
-    List<T> findAllById(Iterable<E> ids);
+    List<T> findAllById(Iterable<Long> ids);
 
     long count(Specification<T> spec);
 
@@ -35,17 +35,17 @@ public interface IService<T, E extends Number> {
 
     Page<T> findAll(Pageable pageable);
 
-    Optional<T> findById(E e);
+    Optional<T> findById(Long e);
 
-    boolean existsById(E e);
+    boolean existsById(Long e);
 
     long count();
 
-    void deleteById(E e);
+    void deleteById(Long e);
 
     void delete(T entity);
 
-    void deleteAllById(Iterable<? extends E> es);
+    void deleteAllById(Iterable<? extends Long> es);
 
     void deleteAll(Iterable<? extends T> entities);
 
@@ -59,7 +59,7 @@ public interface IService<T, E extends Number> {
 
     <S extends T> boolean exists(Example<S> example);
 
-    void removeById(E e);
+    void removeById(Long e);
 
     <S extends T> S saveAndFlush(S entity);
 

@@ -10,6 +10,4 @@ import org.springframework.data.jpa.domain.Specification;
 import java.util.List;
 
 public interface TeacherService {
-
-    Page<TeacherEntity> findAll(TeacherVo teacherQuery, int current, int limit);
 }

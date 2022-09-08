@@ -14,5 +14,5 @@ import org.springframework.stereotype.Repository;
  * @Version: 1.0
  **/
 @Repository
-public interface UserMembershipRepository extends IRepositoryBase<UserMembership, Long> {
+public interface UserMembershipRepository extends IRepositoryBase<UserMembership> {
 }

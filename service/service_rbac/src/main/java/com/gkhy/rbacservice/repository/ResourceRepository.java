@@ -13,5 +13,5 @@ import org.springframework.stereotype.Repository;
  * @Version: 1.0
  **/
 @Repository
-public interface ResourceRepository extends IRepositoryBase<Resource, Long> {
+public interface ResourceRepository extends IRepositoryBase<Resource> {
 }

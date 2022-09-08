@@ -19,7 +19,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/admin/role")
-public class RoleController extends ControllerBase<Role, Long, RoleRepository> {
+public class RoleController extends ControllerBase<Role, RoleRepository> {
 
     private final RoleService roleService;
     private final PermissionService permissionService;

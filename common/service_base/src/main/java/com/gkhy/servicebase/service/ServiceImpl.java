@@ -14,7 +14,7 @@ import com.gkhy.servicebase.service.repository.IService;
  * abstract ServiceImpl class for all the model service inheriting
  *
  * */
-public abstract class ServiceImpl<T, E extends Number, Repository extends IService<T, E>> {
+public abstract class ServiceImpl<T, Repository extends IService<T>> {
 
     protected Repository iRepository;
 
@@ -66,15 +66,15 @@ public abstract class ServiceImpl<T, E extends Number, Repository extends IServi
         return iRepository.findAll(pageable);
     }
 
-    public List<T> findAllById(Iterable<E> ids){
+    public List<T> findAllById(Iterable<Long> ids){
         return iRepository.findAllById(ids);
     }
 
-    public Optional<T> findById(E e) {
+    public Optional<T> findById(Long e) {
         return iRepository.findById(e);
     }
 
-    public boolean existsById(E e) {
+    public boolean existsById(Long e) {
         return iRepository.existsById(e);
     }
 
@@ -82,7 +82,7 @@ public abstract class ServiceImpl<T, E extends Number, Repository extends IServi
         return iRepository.count();
     }
 
-    public void deleteById(E e) {
+    public void deleteById(Long e) {
         iRepository.deleteById(e);
     }
 
@@ -90,7 +90,7 @@ public abstract class ServiceImpl<T, E extends Number, Repository extends IServi
         iRepository.delete(entity);
     }
 
-    public void deleteAllById(Iterable<? extends E> es) {
+    public void deleteAllById(Iterable<? extends Long> es) {
         iRepository.deleteAllById(es);
     }
 
@@ -123,7 +123,7 @@ public abstract class ServiceImpl<T, E extends Number, Repository extends IServi
         return iRepository.exists(example);
     }
 
-    public void removeById(E e) {
+    public void removeById(Long e) {
         iRepository.deleteById(e);
     }
 

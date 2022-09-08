@@ -5,7 +5,7 @@ import com.gkhy.servicebase.service.repository.IService;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
-public interface IRepositoryBase<T, E extends Number> extends
-        IService<T, E>,
-        IJpaRepository<T, E> {
+public interface IRepositoryBase<T> extends
+        IService<T>,
+        IJpaRepository<T, Long> {
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class ResourceServiceImpl
-        extends ServiceImpl<Resource, Long, ResourceRepository>
+        extends ServiceImpl<Resource, ResourceRepository>
         implements ResourceService {
     public ResourceServiceImpl(ResourceRepository iRepository) {
         super(iRepository);

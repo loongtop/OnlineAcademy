@@ -21,30 +21,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin
 @RequestMapping("/eduservice/teacher")
-public final class TeacherController
-        extends ControllerBase<TeacherEntity, Long, TeacherRepository> {
+public final class TeacherController {
 
     private final TeacherService teacherService;
     @Autowired
-    public TeacherController(TeacherRepository teacherRepository, TeacherService teacherService) {
-        super(teacherRepository);
+    public TeacherController(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
-
-    //Method of conditional query with pagination
-    @PostMapping("pageTeacherCondition/{current}/{limit}")
-    public Result pageTeacherCondition(@PathVariable int current, @PathVariable int limit,
-                                       @RequestBody(required = false) TeacherVo teacherQuery) {
-
-        Page<TeacherEntity> eduTeacherList = teacherService.findAll(teacherQuery, current, limit);
-
-        long total = eduTeacherList.getNumberOfElements ();
-
-        return Result.success().data("total",total).data("rows",eduTeacherList.getContent());
-   }
-
-
-
 }
 
 

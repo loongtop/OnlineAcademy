@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class UserMembershipServiceImpl
-        extends ServiceImpl<UserMembership, Long, UserMembershipRepository> implements UserMembershipService {
+        extends ServiceImpl<UserMembership, UserMembershipRepository> implements UserMembershipService {
 
     public UserMembershipServiceImpl(UserMembershipRepository iRepository) {
         super(iRepository);

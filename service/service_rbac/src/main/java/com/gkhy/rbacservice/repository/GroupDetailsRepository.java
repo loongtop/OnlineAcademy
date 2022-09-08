@@ -13,5 +13,5 @@ import org.springframework.stereotype.Repository;
  * @Version: 1.0
  **/
 @Repository
-public interface GroupDetailsRepository extends IRepositoryBase<GroupDetails, Long> {
+public interface GroupDetailsRepository extends IRepositoryBase<GroupDetails> {
 }

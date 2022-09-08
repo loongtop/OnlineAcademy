@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class UserDetailsServiceImpl
-        extends ServiceImpl<UserDetails, Long, UserDetailsRepository> implements UserDetailsService {
+        extends ServiceImpl<UserDetails, UserDetailsRepository> implements UserDetailsService {
 
     public UserDetailsServiceImpl(UserDetailsRepository iRepository) {
         super(iRepository);

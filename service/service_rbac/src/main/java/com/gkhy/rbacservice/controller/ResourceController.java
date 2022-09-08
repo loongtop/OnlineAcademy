@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/admin/resource")
-public class ResourceController extends ControllerBase<Resource, Long, ResourceRepository> {
+public class ResourceController extends ControllerBase<Resource, ResourceRepository> {
     public ResourceController(ResourceRepository resourceRepository) {
         super(resourceRepository);
     }

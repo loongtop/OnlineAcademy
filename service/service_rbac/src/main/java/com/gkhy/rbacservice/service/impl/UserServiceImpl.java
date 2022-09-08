@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class UserServiceImpl
-        extends ServiceImpl<UserRbac, Long, UserRepository> implements UserService {
+        extends ServiceImpl<UserRbac, UserRepository> implements UserService {
 
     @Autowired
     public UserServiceImpl(UserRepository iRepository) {

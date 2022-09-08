@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class GroupDetailsServiceImpl
-        extends ServiceImpl<GroupDetails, Long, GroupDetailsRepository>
+        extends ServiceImpl<GroupDetails, GroupDetailsRepository>
         implements GroupDetailsService {
     public GroupDetailsServiceImpl(GroupDetailsRepository iRepository) {
         super(iRepository);

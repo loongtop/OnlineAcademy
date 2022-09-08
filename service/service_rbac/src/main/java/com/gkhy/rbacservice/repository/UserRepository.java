@@ -14,5 +14,5 @@ import org.springframework.stereotype.Repository;
  * @Version: 1.0
  **/
 @Repository
-public interface UserRepository extends IRepositoryBase<UserRbac, Long> {
+public interface UserRepository extends IRepositoryBase<UserRbac> {
 }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/admin/action")
-public class ActionController  extends ControllerBase<Action, Long, ActionRepository> {
+public class ActionController  extends ControllerBase<Action, ActionRepository> {
     public ActionController(ActionRepository actionRepository) {
         super(actionRepository);
     }

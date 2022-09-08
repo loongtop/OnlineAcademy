@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class GroupServiceImpl
-        extends ServiceImpl<Group, Long, GroupRepository>
+        extends ServiceImpl<Group, GroupRepository>
         implements GroupService {
     public GroupServiceImpl(GroupRepository iRepository) {
         super(iRepository);

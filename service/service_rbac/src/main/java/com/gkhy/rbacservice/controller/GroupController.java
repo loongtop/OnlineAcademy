@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/admin/group")
-public class GroupController extends ControllerBase<Group, Long, GroupRepository> {
+public class GroupController extends ControllerBase<Group, GroupRepository> {
     public GroupController(GroupRepository groupRepository) {
         super(groupRepository);
     }

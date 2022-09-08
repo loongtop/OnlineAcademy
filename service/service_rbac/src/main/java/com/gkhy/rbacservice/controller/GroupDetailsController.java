@@ -26,7 +26,7 @@ import java.util.Optional;
  **/
 @RestController
 @RequestMapping("/admin/groupdetails")
-public class GroupDetailsController extends ControllerBase<GroupDetails, Long, GroupDetailsRepository> {
+public class GroupDetailsController extends ControllerBase<GroupDetails, GroupDetailsRepository> {
 
     private final GroupService groupService;
     private final GroupDetailsService groupDetailsService;

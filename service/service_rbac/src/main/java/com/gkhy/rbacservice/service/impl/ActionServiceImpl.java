@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class ActionServiceImpl
-        extends ServiceImpl<Action, Long, ActionRepository>
+        extends ServiceImpl<Action, ActionRepository>
         implements ActionService {
     public ActionServiceImpl(ActionRepository iRepository) {
         super(iRepository);

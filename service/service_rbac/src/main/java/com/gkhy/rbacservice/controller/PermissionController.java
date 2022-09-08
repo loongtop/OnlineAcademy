@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/permission")
-public class PermissionController extends ControllerBase<Permission, Long, PermissionRepository> {
+public class PermissionController extends ControllerBase<Permission, PermissionRepository> {
 
     private final PermissionService permissionService;
     @Autowired
