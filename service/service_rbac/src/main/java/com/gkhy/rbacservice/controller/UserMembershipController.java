@@ -37,7 +37,7 @@ public class UserMembershipController extends ControllerBase<UserMembership, Lon
     @PostMapping("/add/{id}")
     public Result add(@Valid @PathVariable Long id, @Valid @RequestBody JSONObject obj) {
         Optional<UserRbac> user = userService.findById(id);
-        if (user.isEmpty()) ItemFound.fail().data("message", "Can not find Group in the database!");
+        if (user.isEmpty()) return ItemFound.fail();
 
         UserMembership userMembership = this.JSONObjectToT(obj);
         userMembership.setUser(user.get());

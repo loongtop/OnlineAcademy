@@ -1,6 +1,6 @@
 package com.gkhy.rbacservice.service;
 
-import com.gkhy.rbacservice.entity.Permission;
+import com.gkhy.rbacservice.entity.permission.Permission;
 
 import java.util.List;
 import java.util.Optional;

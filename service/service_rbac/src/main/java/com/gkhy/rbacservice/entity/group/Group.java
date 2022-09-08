@@ -1,6 +1,6 @@
 package com.gkhy.rbacservice.entity.group;
 
-import com.gkhy.rbacservice.entity.Permission;
+import com.gkhy.rbacservice.entity.permission.Permission;
 import com.gkhy.rbacservice.entity.UserRbac;
 import com.gkhy.servicebase.basemodel.OperatorModel;
 import lombok.Getter;

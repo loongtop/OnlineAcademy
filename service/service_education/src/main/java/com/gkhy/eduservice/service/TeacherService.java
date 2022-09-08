@@ -11,19 +11,5 @@ import java.util.List;
 
 public interface TeacherService {
 
-    List<TeacherEntity> findAll();
-
-    List<TeacherEntity> findAll(Specification<TeacherEntity> spec);
-
-    Page<TeacherEntity> findAll(Pageable pageable);
-
-    Page<TeacherEntity> findAll(Specification<TeacherEntity> spec, Pageable pageable);
-
-    List<TeacherEntity> findAll(Specification<TeacherEntity> spec, Sort sort);
-
     Page<TeacherEntity> findAll(TeacherVo teacherQuery, int current, int limit);
-
-    List<TeacherEntity> findAll(Sort sort);
-
-    List<TeacherEntity> findAllOrderByIdDescLimit2();
 }

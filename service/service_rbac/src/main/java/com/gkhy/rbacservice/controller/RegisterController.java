@@ -10,8 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 /**
  * @Name: RegisterController
  * @Description:
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Version: 1.0
  **/
 @RestController
+@RequestMapping("/admin/user")
 public class RegisterController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
@@ -33,7 +34,7 @@ public class RegisterController {
     }
 
     //register a user
-    @PostMapping(path = "/register", consumes = "application/x-www-form-urlencoded")
+    @PostMapping(path = "/register")
     public Result register(@RequestBody @Validated RegisterRequest registerRequest) {
 
         String email  = registerRequest.getEmail();

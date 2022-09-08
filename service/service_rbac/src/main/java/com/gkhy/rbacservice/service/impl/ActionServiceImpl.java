@@ -1,6 +1,6 @@
 package com.gkhy.rbacservice.service.impl;
 
-import com.gkhy.rbacservice.entity.privilege.Action;
+import com.gkhy.rbacservice.entity.permission.Action;
 import com.gkhy.rbacservice.repository.ActionRepository;
 import com.gkhy.rbacservice.service.ActionService;
 import com.gkhy.servicebase.service.ServiceImpl;

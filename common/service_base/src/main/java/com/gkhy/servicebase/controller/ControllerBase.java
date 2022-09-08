@@ -3,6 +3,7 @@ package com.gkhy.servicebase.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.gkhy.servicebase.controller.helper.EntityIsEnabled;
 import com.gkhy.servicebase.result.Result;
+import com.gkhy.servicebase.result.status.StatusCode;
 import com.gkhy.servicebase.service.repository.IService;
 import com.gkhy.servicebase.utils.ItemFound;
 import org.apache.commons.beanutils.PropertyUtilsBean;
@@ -12,24 +13,33 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 
 import lombok.SneakyThrows;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 /**
- * ControllerBase for all the controller to extends
- */
-
+ * @Name: ControllerBase
+ * @Description: ControllerBase for all the controller to extends
+ * @Author: leo
+ * @Created: 2022-07-06
+ * @Updated: 2022-07-06
+ * @Version: 1.0
+ **/
+@Validated
 public abstract class ControllerBase<T, E extends Number, Repository extends IService<T, E>>
-        implements IControllerBase<E> {
+        implements IControllerBase<T, E> {
 
-    private final Repository repository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    private final Repository repository;
 
     @Autowired
     public ControllerBase(Repository repository) {
@@ -38,41 +48,39 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
 
     //Query all rows(data) from the table
     @GetMapping("/all")
-    public Result findAll() {
+    public List<T> findAll() {
         //Call the method of service to query all operations
         List<T> lists = repository.findAll();
-        return Result.success().data("items", lists);
+        return lists;
     }
 
     //Add a record(row) to the table
     @PostMapping("/add")
-    public Result add(@Valid @RequestBody JSONObject obj) {
+    public T add(@RequestBody @NotEmpty JSONObject obj) {
 
         // Encrypt before storing for password
         if (obj.containsKey("password")) {
-            String passwordMD5  = passwordEncoder.encode(String.valueOf(obj.get("password")));
+            String passwordMD5 = passwordEncoder.encode(String.valueOf(obj.get("password")));
             obj.replace("password", passwordMD5);
         }
 
-        T entity = JSONObjectToT(obj);
-        entity = repository.saveAndFlush(entity);
-        return Result.success().data("item", entity);
+        T entity = this.JSONObjectToT(obj);
+        return repository.saveAndFlush(entity);
     }
 
     //Query by id
     @GetMapping("/get/{id}")
-    public Result getById(@Valid @PathVariable E id) {
+    public Object getById(@PathVariable @Min(1) E id) {
         Optional<T> entity = repository.findById(id);
-        if (entity.isPresent()) {
-            return Result.success().data("item", entity);
-        }
+        if (entity.isPresent()) return entity.get();
+
         return ItemFound.fail();
     }
 
     //update a record(row)
     @SneakyThrows
     @PutMapping("/update/{id}")
-    public Result updateById(@Valid @PathVariable E id, @Valid @RequestBody JSONObject obj) {
+    public Object updateById(@Min(1) @PathVariable E id, @RequestBody @NotEmpty JSONObject obj) {
         Optional<T> tOptional = repository.findById(id);
         if (tOptional.isPresent()) {
             T entity = tOptional.get();
@@ -82,19 +90,17 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
             obj.remove("password");
             bean.copyProperties(entity, obj);
 
-            entity = repository.saveAndFlush(entity);
-            return Result.success().data("item", entity);
+            return repository.saveAndFlush(entity);
         }
         return ItemFound.fail();
     }
 
-
     //update a record(row) by entity
     @PutMapping("/update")
-    public Result update(@Valid @RequestBody JSONObject obj) {
+    public Object update(@RequestBody @NotEmpty JSONObject obj) {
 
         if (!obj.containsKey("id")) {
-            return Result.fail().data("message", "There is no id in the object form frontend!");
+            return Result.fail().codeAndMessage(StatusCode.PARAMS_FRONTEND_ERROR);
         }
 
         final E id = (E) obj.get("id");
@@ -103,47 +109,47 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
 
     //logically remove a record(row) (enabled = false)
     @DeleteMapping("/remove/{id}")
-    public Result remove(@Valid @PathVariable E id) {
+    public Object remove(@PathVariable @Min(1) E id) {
         Optional<T> t = repository.findById(id);
         if (t.isPresent()) {
             EntityIsEnabled isEnable = new EntityIsEnabled();
             BeanUtils.copyProperties(isEnable, t.get());
             repository.saveAndFlush(t.get());
-            return Result.success().data("message", String.format("Remove id %s ok!", id));
+            return Result.success().message(String.format("Remove item from visual list by id %s ok!", id));
         }
         return ItemFound.fail();
     }
 
     //logically remove records(rows) (enabled = false)
     @DeleteMapping("/batchRemove")
-    public Result removeByIds(@Valid @RequestParam("ids") List<E> ids) {
+    public Result removeByIds(@RequestParam("ids") @NotEmpty List<E> ids) {
 
         Set<E> unableRemoved = new HashSet<>();
         ids.forEach(id -> {
-            Result t = remove(id);
+            Result t = (Result) remove(id);
             if (t.isFail()) unableRemoved.add(id);
         });
 
         if (unableRemoved.isEmpty()) {
             return Result.success();
         }
-        return Result.success().data("unable to removed list", unableRemoved);
+        return Result.success().data("Unable to removed list", unableRemoved);
     }
 
     //delete a record(row) from the table, Unable to restore
     @DeleteMapping("/delete/{id}")
-    public Result delete(@Valid @PathVariable E id) {
+    public Result delete(@PathVariable @Min(1) E id) {
         Optional<T> t = repository.findById(id);
         if (t.isPresent()) {
             repository.deleteById(id);
-            return Result.success().data("message", String.format("Delete id %s ok!", id));
+            return Result.success().message(String.format("Delete item from database by id %s ok!", id));
         }
         return ItemFound.fail();
     }
 
     //delete records(rows) from the table, Unable to restore
     @DeleteMapping("/batchDelete")
-    public Result deleteByIds(@Valid @RequestParam("ids") List<E> ids) {
+    public Result deleteByIds(@RequestParam("ids") @NotEmpty List<E> ids) {
 
         Set<E> unableDeleted = new HashSet<>();
         ids.forEach(id -> {
@@ -154,16 +160,16 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
 
         if (unableDeleted.isEmpty()) return Result.success();
 
-        return Result.success().data("unable to delete list", unableDeleted);
+        return Result.success().data("Unable to delete list", unableDeleted);
     }
 
     //Method for querying lecturers by page
     //current page
     //the limit of the number of items
     @GetMapping("page/{current}/{limit}")
-    public Result getByPage(@Valid @PathVariable int current, @Valid @PathVariable int limit) {
+    public Result getByPage(@PathVariable @Min(0) int current, @PathVariable @Min(0) int limit) {
         if (current <= 0 || limit <= 0) {
-            return Result.fail().data("message", "Abnormal parameters!");
+            return Result.fail().codeAndMessage(StatusCode.PARAMS_FRONTEND_ERROR);
         }
         Pageable pageable = PageRequest.of(current - 1, limit);
         Page<T> tPage = repository.findAll(pageable);
@@ -182,7 +188,8 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
      * @Date: 2022-09-01
      */
     @SneakyThrows
-    protected T JSONObjectToT(JSONObject jsonObject) {
+    protected T JSONObjectToT(@NotEmpty JSONObject jsonObject) {
+
         ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
         final String className = parameterizedType.getActualTypeArguments()[0].getTypeName();
 

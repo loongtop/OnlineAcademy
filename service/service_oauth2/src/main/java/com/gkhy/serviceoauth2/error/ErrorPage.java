@@ -1,13 +1,13 @@
 package com.gkhy.serviceoauth2.error;
 
 
-import com.gkhy.servicebase.error.IAcademyError;
+import com.gkhy.servicebase.result.status.IStatusCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ErrorPage implements IAcademyError {
+public enum ErrorPage implements IStatusCode {
 
     ERROR_PAGE_403(90403, "authorised not enough!")
     ;

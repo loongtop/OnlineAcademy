@@ -2,6 +2,7 @@ package com.gkhy.rbacservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gkhy.rbacservice.entity.enums.Level;
+import com.gkhy.rbacservice.entity.permission.Permission;
 import com.gkhy.servicebase.basemodel.OperatorModel;
 import lombok.Getter;
 import lombok.Setter;

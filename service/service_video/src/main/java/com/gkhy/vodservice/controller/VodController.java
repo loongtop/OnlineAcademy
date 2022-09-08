@@ -1,6 +1,6 @@
 package com.gkhy.vodservice.controller;
 
-import com.gkhy.servicebase.error.AcademyError;
+import com.gkhy.servicebase.result.status.StatusCode;
 import com.gkhy.servicebase.exception.AcademyException;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.vodservice.service.VodService;
@@ -41,7 +41,7 @@ public class VodController {
             return Result.success();
         }catch(Exception e) {
             e.printStackTrace();
-            throw new AcademyException(AcademyError.DELETE_ERROR.getCode(), AcademyError.DELETE_ERROR.getMessage());
+            throw new AcademyException(StatusCode.DELETE_ERROR.getCode(), StatusCode.DELETE_ERROR.getMessage());
         }
     }
 

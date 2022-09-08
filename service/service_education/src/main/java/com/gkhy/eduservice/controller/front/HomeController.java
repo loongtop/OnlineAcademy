@@ -25,13 +25,4 @@ public final class HomeController {
         this.courseService = courseService;
         this.teacherService = teacherService;
     }
-
-    @GetMapping("/index")
-    public Result index() {
-        List<CourseEntity> courseEntityList = courseService.findAllOrderByIdDescLimit4();
-        List<TeacherEntity> teacherEntities = teacherService.findAllOrderByIdDescLimit2();
-        return Result.success()
-                .data("courseEntityList", courseEntityList)
-                .data("teacherEntities", teacherEntities);
-    }
 }

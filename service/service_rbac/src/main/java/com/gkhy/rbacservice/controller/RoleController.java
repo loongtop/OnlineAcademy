@@ -1,6 +1,6 @@
 package com.gkhy.rbacservice.controller;
 
-import com.gkhy.rbacservice.entity.Permission;
+import com.gkhy.rbacservice.entity.permission.Permission;
 import com.gkhy.rbacservice.repository.RoleRepository;
 import com.gkhy.rbacservice.service.PermissionService;
 import com.gkhy.servicebase.controller.ControllerBase;
@@ -11,6 +11,8 @@ import com.gkhy.servicebase.utils.ItemFound;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,11 +31,14 @@ public class RoleController extends ControllerBase<Role, Long, RoleRepository> {
     }
 
     @PostMapping("/addPermissions/{id}")
-    public Result addPermissions(@Valid @PathVariable Long id, @Valid @RequestParam("ids") List<Long> ids) {
+    public Result addPermissions(@PathVariable @Min(1) Long id, @RequestParam("ids") @NotNull List<Long> ids) {
         Optional<Role> role = roleService.findById(id);
-        if (role.isEmpty()) ItemFound.fail().data("message", "Can not find Role in the database!");
+        if (role.isEmpty()) return ItemFound.fail();
 
         List<Permission> permissionList = permissionService.findAllById(ids);
+
+        if (permissionList.size() <= 0) return ItemFound.fail();
+
         Role entity = role.get();
         permissionList.forEach(p->{
             entity.getPermissions().add(p);
@@ -46,13 +51,16 @@ public class RoleController extends ControllerBase<Role, Long, RoleRepository> {
     }
 
     @DeleteMapping("/removePermissions/{id}")
-    public Result removePermissions(@Valid @PathVariable Long id, @Valid @RequestParam("ids") List<Long> ids) {
+    public Result removePermissions(@PathVariable @Min(1) Long id, @Valid @RequestParam("ids") @NotNull List<Long> ids) {
         Optional<Role> role = roleService.findById(id);
-        if (role.isEmpty()) ItemFound.fail().data("message", "Can not find Role in the database!");
+        if (role.isEmpty()) return ItemFound.fail();
 
         Role entity = role.get();
         Set<Permission> permissionSet = entity.getPermissions();
         List<Permission> permissionList = permissionService.findAllById(ids);
+
+        if (permissionList.size() <= 0) return ItemFound.fail();
+
         permissionList.forEach(p -> {
             p.getRoles().remove(entity);
             permissionService.save(p);

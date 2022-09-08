@@ -1,4 +1,4 @@
-package com.gkhy.rbacservice.entity.privilege;
+package com.gkhy.rbacservice.entity.permission;
 
 import com.gkhy.rbacservice.entity.enums.Level;
 import com.gkhy.servicebase.basemodel.DateModel;

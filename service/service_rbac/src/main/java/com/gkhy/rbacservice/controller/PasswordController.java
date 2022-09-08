@@ -7,9 +7,12 @@ import com.gkhy.rbacservice.service.UserService;
 import com.gkhy.servicebase.redis.RedisService;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.servicebase.utils.ItemFound;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -21,6 +24,7 @@ import java.util.Optional;
  * @Updated: 2022-09-05
  * @Version: 1.0
  **/
+@Validated
 @RestController
 @RequestMapping("/admin/password")
 public class PasswordController {
@@ -33,7 +37,7 @@ public class PasswordController {
     }
 
     @PutMapping("/resetById/{id}")
-    public Result resetById(@Valid @PathVariable Long id, @Valid @RequestBody JSONObject password) {
+    public Result resetById(@PathVariable @Min(1) Long id, @RequestBody @NotNull JSONObject password) {
 
         Optional<UserRbac> user = userService.findById(id);
         if (!user.isPresent()) return ItemFound.fail();
@@ -42,7 +46,7 @@ public class PasswordController {
     }
 
     @PutMapping("/resetByEmail")
-    public Result resetByEmail(@Valid @RequestBody JSONObject password) {
+    public Result resetByEmail(@RequestBody @NotNull JSONObject password) {
 
         if (!password.containsKey("EMAIL") || !password.containsKey("EMAILCODE")) {
             return Result.fail().data("message", "Email or Code error!");
@@ -61,12 +65,11 @@ public class PasswordController {
         return resetPwd(user.get(), password);
     }
 
-    private Result resetPwd(UserRbac user, JSONObject password) {
-        UserRbac entity = Objects.requireNonNull(user);
+    private Result resetPwd(@NotNull UserRbac user, @NotNull JSONObject password) {
 
         String oldPwd = MD5.encrypt((String) password.get("PASSWORD0"));
 
-        if (!oldPwd.equals(entity.getPassword())) {
+        if (!oldPwd.equals(user.getPassword())) {
             return Result.fail().data("message", "Password was wrong!");
         }
 
@@ -75,8 +78,8 @@ public class PasswordController {
         if (!newPassword1.equals(newPassword2)) {
             return Result.fail().data("message", "Passwords were different!");
         }
-        entity.setPassword(MD5.encrypt((String) password.get("PASSWORD1")));
-        UserRbac userRbac = userService.save(entity);
+        user.setPassword(MD5.encrypt((String) password.get("PASSWORD1")));
+        UserRbac userRbac = userService.save(user);
         return Result.success().data("message", "Passwords change successfully!");
     }
 

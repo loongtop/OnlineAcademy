@@ -1,6 +1,6 @@
 package com.gkhy.rbacservice.service;
 
-import com.gkhy.rbacservice.entity.privilege.Action;
+import com.gkhy.rbacservice.entity.permission.Action;
 
 import java.util.List;
 

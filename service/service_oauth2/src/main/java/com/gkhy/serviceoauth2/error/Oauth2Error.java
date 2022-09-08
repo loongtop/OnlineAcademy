@@ -1,12 +1,12 @@
 package com.gkhy.serviceoauth2.error;
 
-import com.gkhy.servicebase.error.IAcademyError;
+import com.gkhy.servicebase.result.status.IStatusCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Oauth2Error implements IAcademyError {
+public enum Oauth2Error implements IStatusCode {
 
     LOGIN_FAILED(20000, "Login failed!"),
     INVALIDED_USERNAME_PASSWORD(20001, "Login failed, wrong username or password!"),

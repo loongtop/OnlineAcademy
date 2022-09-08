@@ -4,7 +4,7 @@ package com.gkhy.rbacservice.controller;
 import com.gkhy.rbacservice.repository.PermissionRepository;
 import com.gkhy.servicebase.controller.ControllerBase;
 import com.gkhy.servicebase.result.Result;
-import com.gkhy.rbacservice.entity.Permission;
+import com.gkhy.rbacservice.entity.permission.Permission;
 import com.gkhy.rbacservice.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,11 +40,4 @@ public class PermissionController extends ControllerBase<Permission, Long, Permi
         return Result.success().data("children", list);
     }
 
-    @PostMapping("/allEnabled")
-    public Result testPermission() {
-//        List<Permission> permissions = permissionService.findAllEnabled();
-//        Permission permission = permissionService.findByName("permission1");
-        System.out.println("test-permission");
-        return Result.success().data("permission",null);
-    }
 }

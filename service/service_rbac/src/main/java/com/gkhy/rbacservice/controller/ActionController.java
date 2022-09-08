@@ -1,6 +1,6 @@
 package com.gkhy.rbacservice.controller;
 
-import com.gkhy.rbacservice.entity.privilege.Action;
+import com.gkhy.rbacservice.entity.permission.Action;
 import com.gkhy.rbacservice.repository.ActionRepository;
 import com.gkhy.servicebase.controller.ControllerBase;
 import org.springframework.web.bind.annotation.RequestMapping;

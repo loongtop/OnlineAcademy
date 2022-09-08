@@ -1,7 +1,6 @@
 package com.gkhy.eduservice.controller;
 
 import com.gkhy.eduservice.entity.VideoEntity;
-import com.gkhy.eduservice.entity.form.VideoForm;
 import com.gkhy.eduservice.error.EducationError;
 import com.gkhy.eduservice.feign.VideoFeignClient;
 import com.gkhy.eduservice.service.VideoService;

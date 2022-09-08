@@ -12,6 +12,8 @@ import com.gkhy.servicebase.utils.ItemFound;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 /**
@@ -36,9 +38,9 @@ public class GroupDetailsController extends ControllerBase<GroupDetails, Long, G
     }
 
     @PostMapping("/add/{id}")
-    public Result add(@Valid @PathVariable Long id, @Valid @RequestBody JSONObject obj) {
+    public Result add(@PathVariable @Min(1) Long id, @RequestBody @NotNull JSONObject obj) {
         Optional<Group> group = groupService.findById(id);
-        if (group.isEmpty()) ItemFound.fail().data("message", "Can not find Group in the database!");
+        if (group.isEmpty()) return ItemFound.fail();
 
         GroupDetails groupDetails = this.JSONObjectToT(obj);
         groupDetails.setGroup(group.get());

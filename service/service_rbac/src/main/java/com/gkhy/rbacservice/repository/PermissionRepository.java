@@ -1,7 +1,7 @@
 package com.gkhy.rbacservice.repository;
 
 import com.gkhy.servicebase.service.IRepositoryBase;
-import com.gkhy.rbacservice.entity.Permission;
+import com.gkhy.rbacservice.entity.permission.Permission;
 import org.springframework.stereotype.Repository;
 /**
  * @Name: PermissionRepository

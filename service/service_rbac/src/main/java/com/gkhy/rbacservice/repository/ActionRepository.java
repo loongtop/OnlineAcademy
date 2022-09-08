@@ -1,6 +1,6 @@
 package com.gkhy.rbacservice.repository;
 
-import com.gkhy.rbacservice.entity.privilege.Action;
+import com.gkhy.rbacservice.entity.permission.Action;
 import com.gkhy.servicebase.service.IRepositoryBase;
 import org.springframework.stereotype.Repository;
 

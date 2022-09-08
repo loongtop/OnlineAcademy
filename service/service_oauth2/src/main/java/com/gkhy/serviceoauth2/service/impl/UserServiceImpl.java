@@ -1,6 +1,7 @@
 package com.gkhy.serviceoauth2.service.impl;
 
 import com.gkhy.servicebase.exception.AcademyException;
+import com.gkhy.servicebase.result.status.StatusCode;
 import com.gkhy.servicebase.service.ServiceImpl;
 import com.gkhy.servicebase.user.IUserRepository;
 import com.gkhy.servicebase.user.User;
@@ -43,13 +44,9 @@ public class UserServiceImpl
     public UserDetails loadUserById(Long id) {
         Optional<User> user = this.findById(id);
         if (user.isEmpty()) {
-            throw new AcademyException(ItemFound.fail().getCode(),
-                    ItemFound.fail().getMessage());
+            throw new AcademyException(StatusCode.ITEM_NOT_FOUND_ERROR);
         }
 
         return UserPrincipal.of(user.get());
     }
-
-
-
 }

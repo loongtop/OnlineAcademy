@@ -1,12 +1,12 @@
 package com.gkhy.rbacservice.error;
 
-import com.gkhy.servicebase.error.IAcademyError;
+import com.gkhy.servicebase.result.status.IStatusCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum RBACError implements IAcademyError {
+public enum RBACError implements IStatusCode {
 
     LOGIN_FAILED(20000, "Login failed!"),
     INVALIDED_USERNAME_PASSWORD(20001, "Login failed, wrong username or password!"),
@@ -21,6 +21,7 @@ public enum RBACError implements IAcademyError {
     EMAIL_NOT_FOUND_FROM_OAUTH2(20010, "Email has not found from OAuth2 provider!"),
     EMAIL_NOT_FOUND_FROM_DATABASE(20011, "Email has not found from database!"),
     COOKIES_NOT_FOUND_IN_REQUEST(20012, "Cookies has not found in  HttpRequest!"),
+    EMAIL_OR_PASSWORD_WRONG(20013,"Email or Password were wrong!"),
 
     OAUTH2_GENERAL_ERROR(20099, "error")
     ;

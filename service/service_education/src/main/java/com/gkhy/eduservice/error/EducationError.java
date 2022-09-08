@@ -1,12 +1,12 @@
 package com.gkhy.eduservice.error;
 
-import com.gkhy.servicebase.error.IAcademyError;
+import com.gkhy.servicebase.result.status.IStatusCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum EducationError implements IAcademyError {
+public enum EducationError implements IStatusCode {
 
     DELETE_ERROR(20012,"Delete failed"),
     FILE_IS_EMPTY(20011, "The file is empty"),

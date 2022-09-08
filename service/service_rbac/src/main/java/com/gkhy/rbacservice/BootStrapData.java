@@ -1,23 +1,11 @@
 package com.gkhy.rbacservice;
 
-import com.gkhy.rbacservice.entity.Permission;
-import com.gkhy.rbacservice.entity.Role;
-import com.gkhy.rbacservice.entity.UserRbac;
-import com.gkhy.rbacservice.entity.enums.Level;
-import com.gkhy.rbacservice.entity.privilege.Action;
-import com.gkhy.rbacservice.entity.privilege.Privilege;
-import com.gkhy.rbacservice.entity.privilege.Resource;
-import com.gkhy.rbacservice.entity.userDetails.UserDetails;
-import com.gkhy.rbacservice.entity.userDetails.UserMembership;
 import com.gkhy.rbacservice.service.*;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 
 @Component
@@ -30,19 +18,17 @@ public class BootStrapData implements CommandLineRunner {
     private UserMembershipService userMembershipService;
     private RoleService roleService;
     private PermissionService permissionService;
-    private PrivilegeService privilegeService;
     private ResourceService resourceService;
     private ActionService actionService;
     private GroupService groupService;
     private GroupDetailsService groupDetailsService;
 
-    public BootStrapData(UserService userService, UserDetailsService userDetailsService, UserMembershipService userMembershipService, RoleService roleService, PermissionService permissionService, PrivilegeService privilegeService, ResourceService resourceService, ActionService actionService, GroupService groupService, GroupDetailsService groupDetailsService) {
+    public BootStrapData(UserService userService, UserDetailsService userDetailsService, UserMembershipService userMembershipService, RoleService roleService, PermissionService permissionService, ResourceService resourceService, ActionService actionService, GroupService groupService, GroupDetailsService groupDetailsService) {
         this.userService = userService;
         this.userDetailsService = userDetailsService;
         this.userMembershipService = userMembershipService;
         this.roleService = roleService;
         this.permissionService = permissionService;
-        this.privilegeService = privilegeService;
         this.resourceService = resourceService;
         this.actionService = actionService;
         this.groupService = groupService;

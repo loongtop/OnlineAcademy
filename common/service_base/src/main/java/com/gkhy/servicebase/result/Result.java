@@ -1,9 +1,14 @@
 package com.gkhy.servicebase.result;
 
+import com.gkhy.servicebase.result.status.IStatusCode;
+import com.gkhy.servicebase.result.status.StatusCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,37 +21,38 @@ import java.util.Map;
 
 @Getter
 @Setter
-@Component
-public final class Result extends HashMap<String, Object> {
-
-    private static final int SUCCESS = 20000;
-    private static final int ERROR = 20001;
+@NoArgsConstructor
+public final class Result implements Serializable {
 
     private static final long serialVersionUID = -2666368596113433194L;
 
-    private boolean fail;
+    private boolean success;
     private Integer code;
     private String message;
+    private HashMap<String, Object> data = new HashMap<>();
 
     public static Result success() {
         Result r = new Result();
-        r.setFail(false);
-        r.setCode(SUCCESS);
-        r.setMessage("Success");
-        r.data("message", "Successful operation");
+        r.setSuccess(true);
+        r.setCode(StatusCode.SUCCESS.getCode());
+        r.setMessage(StatusCode.SUCCESS.getMessage());
         return r;
+    }
+
+    public boolean isFail(){
+        return !this.isSuccess();
     }
 
     public static Result fail() {
         Result r = new Result();
-        r.setFail(true);
-        r.setCode(ERROR);
-        r.setMessage("Failure");
+        r.setSuccess(false);
+        r.setCode(StatusCode.FAILED.getCode());
+        r.setMessage(StatusCode.FAILED.getMessage());
         return r;
     }
 
-    public Result success(Boolean success){
-        this.setFail(success);
+    private Result fail(Boolean status){
+        this.setSuccess(status);
         return this;
     }
 
@@ -60,13 +66,19 @@ public final class Result extends HashMap<String, Object> {
         return this;
     }
 
+    public Result codeAndMessage(IStatusCode StatusCode){
+        this.setCode(StatusCode.getCode());
+        this.setMessage(StatusCode.getMessage());
+        return this;
+    }
+
     public Result data(String key, Object value){
-        super.put(key, value);
+        this.data.put(key, value);
         return this;
     }
 
     public Result data(Map<String, Object> map){
-        super.putAll(map);
+        this.data.putAll(map);
         return this;
     }
 }

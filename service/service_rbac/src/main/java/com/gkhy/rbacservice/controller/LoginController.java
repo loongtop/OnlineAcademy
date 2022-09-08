@@ -7,11 +7,13 @@ import com.gkhy.rbacservice.entity.request.LoginRequest;
 import com.gkhy.rbacservice.service.UserService;
 import com.gkhy.servicebase.redis.RedisService;
 import com.gkhy.servicebase.result.Result;
+import com.gkhy.servicebase.result.status.StatusCode;
 import com.gkhy.servicebase.utils.ItemFound;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,6 +30,7 @@ import java.util.stream.Collectors;
  * @Version: 1.0
  **/
 @RestController
+@RequestMapping("/admin/user")
 public class LoginController {
 
     private final UserService userService;
@@ -54,16 +57,16 @@ public class LoginController {
         UserRbac userRbac = user.get();
 
         if (!userRbac.getPassword().equals((passwordEncoder.encode(password)))) {
-            return Result.fail().data("message", "Email or Password were wrong!");
+            return Result.fail().codeAndMessage(RBACError.EMAIL_OR_PASSWORD_WRONG);
         }
 
         List<String> permissions = null;
         for (Role role : userRbac.getRoles()) {
-            permissions.addAll(role.getPermissions()
-                    .stream().filter(Objects::nonNull)
-                    .map(permission -> permission.getPrivilegeId().toString())
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toList()));
+//            permissions.addAll(role.getPermissions()
+//                    .stream().filter(Objects::nonNull)
+//                    .map(permission.get)
+//                    .filter(Objects::nonNull)
+//                    .collect(Collectors.toList()));
         }
 
         redisService.set(userRbac.getName() + userRbac.getEmail(), permissions);

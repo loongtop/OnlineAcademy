@@ -2,7 +2,7 @@ package com.gkhy.rbacservice.service.impl;
 
 import com.gkhy.rbacservice.service.PermissionService;
 import com.gkhy.servicebase.service.ServiceImpl;
-import com.gkhy.rbacservice.entity.Permission;
+import com.gkhy.rbacservice.entity.permission.Permission;
 import com.gkhy.rbacservice.repository.PermissionRepository;
 import org.springframework.stereotype.Service;
 

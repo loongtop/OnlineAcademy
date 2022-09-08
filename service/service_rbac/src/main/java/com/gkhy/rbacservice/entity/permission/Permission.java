@@ -1,8 +1,9 @@
-package com.gkhy.rbacservice.entity;
+package com.gkhy.rbacservice.entity.permission;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.gkhy.rbacservice.entity.Department;
+import com.gkhy.rbacservice.entity.Role;
 import com.gkhy.rbacservice.entity.group.Group;
-import com.gkhy.rbacservice.entity.privilege.Privilege;
 import com.gkhy.servicebase.basemodel.DateModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * @ClassName Permission
@@ -27,7 +27,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @JsonIgnoreProperties(value = {"roles", "privilege"})
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "name" }) })
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "action_resource", "url" }) })
 public final class Permission extends DateModel {
 
     private static final long serialVersionUID = -4961118546104218207L;
@@ -37,20 +37,19 @@ public final class Permission extends DateModel {
     @Column(name = "id")
     private Long id;
 
-    private String name;
+    @Column(name = "action_resource", nullable = false)
+    private String actionResource;
 
-    @OneToOne(mappedBy = "permission", fetch = FetchType.EAGER)
-    private Privilege privilege;
+    @Column(name = "url", nullable = false)
+    private String url;
+
+    private String resourceId;
 
     private String icon;
 
-    @Column(name = "privilege_id", nullable = false)
-    private UUID privilegeId;
 
     @Column(name = "enabled", nullable = false)
     private Boolean enabled = Boolean.TRUE;
-
-    private LocalDateTime expiryTime;
 
     @Transient
     private Set<?> permissions;
