@@ -7,6 +7,7 @@ import com.gkhy.eduservice.service.TeacherService;
 import com.gkhy.servicebase.controller.ControllerBase;
 import com.gkhy.servicebase.result.Result;
 import org.springframework.data.domain.Page;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
@@ -31,7 +32,7 @@ public final class TeacherController {
 
     //Method of conditional query with pagination
     @PostMapping("pageTeacherCondition/{current}/{limit}")
-    public Result pageTeacherCondition(@PathVariable @Min(1) int current, @PathVariable @Min(1) int limit,
+    public Result pageTeacherCondition(@PathVariable @Validated @Min(1) int current, @PathVariable @Min(1) int limit,
                                        @RequestBody(required = false) TeacherVo teacherQuery) {
 
         Page<TeacherEntity> eduTeacherList = teacherService.findAll(teacherQuery, current, limit);

@@ -3,8 +3,7 @@ package com.gkhy.eduorder.entity;
 import com.gkhy.servicebase.basemodel.DateModel;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -25,6 +24,8 @@ public class PayLog extends DateModel {
     private static final long serialVersionUID = 402433662897235817L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     private String orderNo;

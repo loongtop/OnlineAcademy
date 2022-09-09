@@ -3,8 +3,7 @@ package com.gkhy.eduorder.entity;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 import com.gkhy.servicebase.basemodel.DateModel;
@@ -28,6 +27,8 @@ public class Order extends DateModel {
     private static final long serialVersionUID = 4716562029132875978L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     private String orderNo;

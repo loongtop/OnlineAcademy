@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -45,7 +46,7 @@ public class LoginController {
 
     //user login account
     @PostMapping(path = "/login")
-    public Result login(@RequestBody @Validated LoginRequest loginRequest) {
+    public Result login(@RequestBody @Valid LoginRequest loginRequest) {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
         String remember = loginRequest.getRemember();

@@ -59,7 +59,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
         // Encrypt before storing for password
         if (obj.containsKey("password")) {
             String passwordMD5 = passwordEncoder.encode(String.valueOf(obj.get("password")));
-            obj.replace("password", "");
+            obj.replace("password", passwordMD5);
         }
 
         T entity = this.JSONObjectToT(obj);
@@ -70,27 +70,25 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     @GetMapping("/get/{id}")
     public Object getById(@PathVariable @Min(1) E id) {
         Optional<T> entity = repository.findById(id);
-        if (entity.isPresent()) return entity.get();
+        if (entity.isEmpty()) return ItemFound.fail();
 
-        return ItemFound.fail();
+        return entity.get();
     }
 
     //update a record(row)
     @SneakyThrows
     @PutMapping("/update/{id}")
     public Object updateById(@PathVariable @Min(1) E id, @RequestBody @NotEmpty JSONObject obj) {
-        Optional<T> tOptional = repository.findById(id);
-        if (tOptional.isPresent()) {
-            T entity = tOptional.get();
+        Optional<T> item = repository.findById(id);
+        if (item.isEmpty()) return ItemFound.fail();
 
-            PropertyUtilsBean bean = new PropertyUtilsBean();
-            obj.remove("id");
-            obj.remove("password");
-            bean.copyProperties(entity, obj);
+        T entity = item.get();
+        PropertyUtilsBean bean = new PropertyUtilsBean();
+        obj.remove("id");
+        obj.remove("password");
+        bean.copyProperties(entity, obj);
 
-            return repository.saveAndFlush(entity);
-        }
-        return ItemFound.fail();
+        return repository.saveAndFlush(entity);
     }
 
     //update a record(row) by entity
@@ -184,7 +182,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
      * @Date: 2022-09-01
      */
     @SneakyThrows
-    protected T JSONObjectToT(@NotEmpty JSONObject jsonObject) {
+    protected T JSONObjectToT(JSONObject jsonObject) {
 
         ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
         final String className = parameterizedType.getActualTypeArguments()[0].getTypeName();

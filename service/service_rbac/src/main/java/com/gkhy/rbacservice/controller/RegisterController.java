@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+
 /**
  * @Name: RegisterController
  * @Description:
@@ -35,7 +38,7 @@ public class RegisterController {
 
     //register a user
     @PostMapping(path = "/register")
-    public Result register(@RequestBody @Validated RegisterRequest registerRequest) {
+    public Result register(@RequestBody @Valid RegisterRequest registerRequest) {
 
         String email  = registerRequest.getEmail();
         String password = registerRequest.getPassword();
