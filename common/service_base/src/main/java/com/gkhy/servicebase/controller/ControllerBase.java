@@ -24,9 +24,16 @@ import lombok.SneakyThrows;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
+/**
+ * @Name: ControllerBase
+ * @Description: ControllerBase for all the controller to extends
+ * @Author: leo
+ * @Created: 2022-07-06
+ * @Updated: 2022-07-06
+ * @Version: 1.0
+ **/
 @Validated
-public abstract class ControllerBase<T, Repository extends IService<T>>
-        implements IControllerBase<T> {
+public abstract class ControllerBase<T, E extends Number, Repository extends IService<T, E>> {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -41,7 +48,8 @@ public abstract class ControllerBase<T, Repository extends IService<T>>
     @GetMapping("/all")
     public List<T> findAll() {
         //Call the method of service to query all operations
-        return repository.findAll();
+        List<T> lists = repository.findAll();
+        return lists;
     }
 
     //Add a record(row) to the table
@@ -60,7 +68,7 @@ public abstract class ControllerBase<T, Repository extends IService<T>>
 
     //Query by id
     @GetMapping("/get/{id}")
-    public Object getById(@PathVariable @Min(1) Long id) {
+    public Object getById(@PathVariable @Min(1) E id) {
         Optional<T> entity = repository.findById(id);
         if (entity.isPresent()) return entity.get();
 
@@ -70,7 +78,7 @@ public abstract class ControllerBase<T, Repository extends IService<T>>
     //update a record(row)
     @SneakyThrows
     @PutMapping("/update/{id}")
-    public Object updateById(@Min(1) @PathVariable Long id, @RequestBody @NotEmpty JSONObject obj) {
+    public Object updateById(@PathVariable @Min(1) E id, @RequestBody @NotEmpty JSONObject obj) {
         Optional<T> tOptional = repository.findById(id);
         if (tOptional.isPresent()) {
             T entity = tOptional.get();
@@ -93,13 +101,13 @@ public abstract class ControllerBase<T, Repository extends IService<T>>
             return Result.fail().codeAndMessage(StatusCode.PARAMS_FRONTEND_ERROR);
         }
 
-        final Long id = (Long) obj.get("id");
+        final E id = (E) obj.get("id");
         return updateById(id, obj);
     }
 
     //logically remove a record(row) (enabled = false)
     @DeleteMapping("/remove/{id}")
-    public Object remove(@PathVariable @Min(1) Long id) {
+    public Object remove(@PathVariable @Min(1) E id) {
         Optional<T> t = repository.findById(id);
         if (t.isPresent()) {
             EntityIsEnabled isEnable = new EntityIsEnabled();
@@ -112,9 +120,9 @@ public abstract class ControllerBase<T, Repository extends IService<T>>
 
     //logically remove records(rows) (enabled = false)
     @DeleteMapping("/batchRemove")
-    public Result removeByIds(@RequestParam("ids") @NotEmpty List<Long> ids) {
+    public Result removeByIds(@RequestParam("ids") @NotEmpty List<E> ids) {
 
-        Set<Long> unableRemoved = new HashSet<>();
+        Set<E> unableRemoved = new HashSet<>();
         ids.forEach(id -> {
             Result t = (Result) remove(id);
             if (t.isFail()) unableRemoved.add(id);
@@ -128,7 +136,7 @@ public abstract class ControllerBase<T, Repository extends IService<T>>
 
     //delete a record(row) from the table, Unable to restore
     @DeleteMapping("/delete/{id}")
-    public Result delete(@PathVariable @Min(1) Long id) {
+    public Result delete(@PathVariable @Min(1) E id) {
         Optional<T> t = repository.findById(id);
         if (t.isPresent()) {
             repository.deleteById(id);
@@ -139,9 +147,9 @@ public abstract class ControllerBase<T, Repository extends IService<T>>
 
     //delete records(rows) from the table, Unable to restore
     @DeleteMapping("/batchDelete")
-    public Result deleteByIds(@RequestParam("ids") @NotEmpty List<Long> ids) {
+    public Result deleteByIds(@RequestParam("ids") @NotEmpty List<E> ids) {
 
-        Set<Long> unableDeleted = new HashSet<>();
+        Set<E> unableDeleted = new HashSet<>();
         ids.forEach(id -> {
             if (!repository.existsById(id)) unableDeleted.add(id);
         });
