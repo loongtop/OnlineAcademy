@@ -12,8 +12,13 @@ import lombok.Data;
 
 import com.gkhy.servicebase.basemodel.DateModel;
 import com.gkhy.servicebase.user.enums.AuthProvider;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @JsonIgnoreProperties(value = "{password}")
 @Table(name = "member_center",

@@ -22,7 +22,6 @@ import java.util.*;
 import lombok.SneakyThrows;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -34,8 +33,7 @@ import javax.validation.constraints.NotEmpty;
  * @Version: 1.0
  **/
 @Validated
-public abstract class ControllerBase<T, E extends Number, Repository extends IService<T, E>>
-        implements IControllerBase<T, E> {
+public abstract class ControllerBase<T, E extends Number, Repository extends IService<T, E>> {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -61,7 +59,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
         // Encrypt before storing for password
         if (obj.containsKey("password")) {
             String passwordMD5 = passwordEncoder.encode(String.valueOf(obj.get("password")));
-            obj.replace("password", passwordMD5);
+            obj.replace("password", "");
         }
 
         T entity = this.JSONObjectToT(obj);
@@ -80,7 +78,7 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     //update a record(row)
     @SneakyThrows
     @PutMapping("/update/{id}")
-    public Object updateById(@Min(1) @PathVariable E id, @RequestBody @NotEmpty JSONObject obj) {
+    public Object updateById(@PathVariable @Min(1) E id, @RequestBody @NotEmpty JSONObject obj) {
         Optional<T> tOptional = repository.findById(id);
         if (tOptional.isPresent()) {
             T entity = tOptional.get();
@@ -167,10 +165,8 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     //current page
     //the limit of the number of items
     @GetMapping("page/{current}/{limit}")
-    public Result getByPage(@PathVariable @Min(0) int current, @PathVariable @Min(0) int limit) {
-        if (current <= 0 || limit <= 0) {
-            return Result.fail().codeAndMessage(StatusCode.PARAMS_FRONTEND_ERROR);
-        }
+    public Result getByPage(@PathVariable @Min(1) int current, @PathVariable @Min(1) int limit) {
+
         Pageable pageable = PageRequest.of(current - 1, limit);
         Page<T> tPage = repository.findAll(pageable);
         long total = tPage.getNumberOfElements();
