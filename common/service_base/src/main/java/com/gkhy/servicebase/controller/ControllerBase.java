@@ -107,13 +107,12 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     @DeleteMapping("/remove/{id}")
     public Object remove(@PathVariable @Min(1) E id) {
         Optional<T> t = repository.findById(id);
-        if (t.isPresent()) {
-            EntityIsEnabled isEnable = new EntityIsEnabled();
-            BeanUtils.copyProperties(isEnable, t.get());
-            repository.saveAndFlush(t.get());
-            return Result.success().message(String.format("Remove item from visual list by id %s ok!", id));
-        }
-        return ItemFound.fail();
+        if (t.isEmpty()) return ItemFound.fail();
+
+        EntityIsEnabled isEnable = new EntityIsEnabled();
+        BeanUtils.copyProperties(isEnable, t.get());
+        repository.saveAndFlush(t.get());
+        return Result.success().message(String.format("Remove item from visual list by id %s ok!", id));
     }
 
     //logically remove records(rows) (enabled = false)
@@ -135,8 +134,8 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     //delete a record(row) from the table, Unable to restore
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable @Min(1) E id) {
-        Optional<T> t = repository.findById(id);
-        if (t.isPresent()) {
+
+        if (repository.existsById(id)) {
             repository.deleteById(id);
             return Result.success().message(String.format("Delete item from database by id %s ok!", id));
         }

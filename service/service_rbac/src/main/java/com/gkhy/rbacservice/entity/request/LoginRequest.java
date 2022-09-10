@@ -5,9 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 /**
  * Created by Leo
@@ -23,7 +21,7 @@ public class LoginRequest {
     private String email;
 
     @NotBlank(message = "Password can not be blank!")
-    @Range(min = 6, max = 20)
+    @Size(min = 6, max = 20)
     private String password;
 
     private String remember;

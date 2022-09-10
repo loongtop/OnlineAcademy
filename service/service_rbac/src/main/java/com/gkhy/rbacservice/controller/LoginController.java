@@ -5,6 +5,7 @@ import com.gkhy.rbacservice.entity.UserRbac;
 import com.gkhy.rbacservice.error.RBACError;
 import com.gkhy.rbacservice.entity.request.LoginRequest;
 import com.gkhy.rbacservice.service.UserService;
+import com.gkhy.servicebase.controller.annotation.NotControllerResponseAdvice;
 import com.gkhy.servicebase.redis.RedisService;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.servicebase.result.status.StatusCode;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -45,37 +47,35 @@ public class LoginController {
     }
 
     //user login account
+    @NotControllerResponseAdvice
     @PostMapping(path = "/login")
-    public Result login(@RequestBody @Valid LoginRequest loginRequest) {
+    public Object login(@Validated LoginRequest loginRequest) {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
-        String remember = loginRequest.getRemember();
+        String remember = Objects.requireNonNullElse(loginRequest.getRemember(), "");
 
         Optional<UserRbac> user = userService.findOneByColumnName("email", email);
-
         if (user.isEmpty()) return ItemFound.fail().data("message", RBACError.LOGIN_FAILED);
 
         UserRbac userRbac = user.get();
-
-        if (!userRbac.getPassword().equals((passwordEncoder.encode(password)))) {
+        if (!passwordEncoder.matches(password, userRbac.getPassword())) {
             return Result.fail().codeAndMessage(RBACError.EMAIL_OR_PASSWORD_WRONG);
         }
 
+        if (!userRbac.getEmailVerified())
+            return "Go to verified you email with the code!";
+
         List<String> permissions = null;
         for (Role role : userRbac.getRoles()) {
-//            permissions.addAll(role.getPermissions()
-//                    .stream().filter(Objects::nonNull)
-//                    .map(permission.get)
-//                    .filter(Objects::nonNull)
-//                    .collect(Collectors.toList()));
         }
 
-        redisService.set(userRbac.getName() + userRbac.getEmail(), permissions);
+
+        redisService.set(userRbac.getName() + userRbac.getEmail(), "permissions");
 
         if (remember.equals("on")) {
             redisService.set("remember", "remember");
         }
-        return Result.success().data("message", "login");
+        return "index1.html";
     }
 
 }

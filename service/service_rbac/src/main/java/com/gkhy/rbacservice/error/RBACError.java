@@ -22,6 +22,8 @@ public enum RBACError implements IStatusCode {
     EMAIL_NOT_FOUND_FROM_DATABASE(20011, "Email has not found from database!"),
     COOKIES_NOT_FOUND_IN_REQUEST(20012, "Cookies has not found in  HttpRequest!"),
     EMAIL_OR_PASSWORD_WRONG(20013,"Email or Password were wrong!"),
+    EMAIL_VERIFICATION_ERROR(20014, "Email verification failed!"),
+    PASSWORDS_DIFFERENT_ERROR(20014, "Passwords are different!"),
 
     OAUTH2_GENERAL_ERROR(20099, "error")
     ;

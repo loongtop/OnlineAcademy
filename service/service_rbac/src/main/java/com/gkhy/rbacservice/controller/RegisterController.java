@@ -4,16 +4,20 @@ import com.gkhy.rbacservice.entity.UserRbac;
 import com.gkhy.rbacservice.entity.request.RegisterRequest;
 import com.gkhy.rbacservice.error.RBACError;
 import com.gkhy.rbacservice.service.UserService;
+import com.gkhy.servicebase.controller.annotation.NotControllerResponseAdvice;
 import com.gkhy.servicebase.redis.RedisService;
 import com.gkhy.servicebase.result.Result;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Objects;
 
 /**
  * @Name: RegisterController
@@ -37,13 +41,19 @@ public class RegisterController {
     }
 
     //register a user
+    @NotControllerResponseAdvice
     @PostMapping(path = "/register")
-    public Result register(@RequestBody @Valid RegisterRequest registerRequest) {
+    public Object register(@Valid RegisterRequest registerRequest) {
+
+        String password1 = registerRequest.getPassword1();
+        String password2 = registerRequest.getPassword2();
+        if (!password1.equals(password2)) {
+            return Result.fail().codeAndMessage(RBACError.PASSWORDS_DIFFERENT_ERROR);
+        }
 
         String email  = registerRequest.getEmail();
-        String password = registerRequest.getPassword();
         String name = registerRequest.getName();
-        String remember = registerRequest.getRemember();
+        String remember = Objects.requireNonNullElse(registerRequest.getRemember(), "");
 
         if(userService.existsByColumnName("email", email)) {
             return Result.fail().data("message", RBACError.EMAIL_OCCUPIED);
@@ -53,7 +63,7 @@ public class RegisterController {
         UserRbac user = new UserRbac();
         user.setName(name);
         user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(passwordEncoder.encode(password1));
         user.setEnabled(true);
         userService.save(user);
 
@@ -61,7 +71,7 @@ public class RegisterController {
             redisService.set("remember", "remember");
         }
 
-        return Result.success().data("message", "Register successfully!");
+        return "redirect:/login.html";
     }
 
 }
