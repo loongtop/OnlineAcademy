@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = "com.gkhy")
 public class RbacApplication {
     public static void main(String[] args) {
-        System.setProperty("spring.devtools.restart.enabled", "false");
+        System.setProperty("spring.devtools.restart.enabled", "true");
         SpringApplication app = new SpringApplication(RbacApplication.class);
         app.setBannerMode(Banner.Mode.OFF);
         app.run(args);

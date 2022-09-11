@@ -1,15 +1,12 @@
 package com.gkhy.rbacservice.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.gkhy.rbacservice.service.UserService;
-import com.gkhy.rbacservice.url.Url;
 import com.gkhy.servicebase.controller.annotation.NotControllerResponseAdvice;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.rbacservice.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@RestController
-@RequestMapping("/admin")
+@Controller
+@RequestMapping
 public class IndexController {
 
     private List<String> list = new ArrayList<>();
@@ -32,6 +29,7 @@ public class IndexController {
         this.indexService = indexService;
         list.add("user1");
         list.add("user2");
+        list.add("user3");
     }
 
     @GetMapping("/info")
@@ -54,21 +52,38 @@ public class IndexController {
     }
 
     @NotControllerResponseAdvice
-    @PostMapping("/text3")
-    public Object text3(){
+    @PostMapping("/layout")
+    public Object layout(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("user", this.list);
-        modelAndView.setViewName("redirect:/model/index1.html");
+        modelAndView.setViewName("/layout");
+//        modelAndView.setViewName("redirect:/model/index1.html");
         return modelAndView;
     }
 
     @NotControllerResponseAdvice
-    @PostMapping("/text4")
-    public Object text4(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("user", this.list);
-        modelAndView.setViewName("index2");
-        return modelAndView;
+    @PostMapping("/test1")
+    public Object test1(){
+
+        return "/login";
     }
 
+    @NotControllerResponseAdvice
+    @PostMapping("/test2")
+    public Object test2(){
+        //static file
+        return "login";
+    }
+
+    @NotControllerResponseAdvice
+    @PostMapping("/test3")
+    public Object test3(){
+        return "redirect:login.html";
+    }
+
+    @NotControllerResponseAdvice
+    @PostMapping("/test4")
+    public Object test4(){
+        return "redirect:layout.html";
+    }
 }

@@ -11,39 +11,39 @@ import org.springframework.stereotype.Component;
 @Component
 public class BootStrapData implements CommandLineRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(BootStrapData.class);
+//    private static final Logger logger = LoggerFactory.getLogger(BootStrapData.class);
 
-    private UserService userService;
-    private UserDetailsService userDetailsService;
-    private UserMembershipService userMembershipService;
-    private RoleService roleService;
-    private PermissionService permissionService;
-    private ResourceService resourceService;
-    private ActionService actionService;
-    private GroupService groupService;
-    private GroupDetailsService groupDetailsService;
-
-    public BootStrapData(UserService userService, UserDetailsService userDetailsService, UserMembershipService userMembershipService, RoleService roleService, PermissionService permissionService, ResourceService resourceService, ActionService actionService, GroupService groupService, GroupDetailsService groupDetailsService) {
-        this.userService = userService;
-        this.userDetailsService = userDetailsService;
-        this.userMembershipService = userMembershipService;
-        this.roleService = roleService;
-        this.permissionService = permissionService;
-        this.resourceService = resourceService;
-        this.actionService = actionService;
-        this.groupService = groupService;
-        this.groupDetailsService = groupDetailsService;
-    }
-
+    //    private UserService userService;
+//    private UserDetailsService userDetailsService;
+//    private UserMembershipService userMembershipService;
+//    private RoleService roleService;
+//    private PermissionService permissionService;
+//    private ResourceService resourceService;
+//    private ActionService actionService;
+//    private GroupService groupService;
+//    private GroupDetailsService groupDetailsService;
+//
+//    public BootStrapData(UserService userService, UserDetailsService userDetailsService, UserMembershipService userMembershipService, RoleService roleService, PermissionService permissionService, ResourceService resourceService, ActionService actionService, GroupService groupService, GroupDetailsService groupDetailsService) {
+//        this.userService = userService;
+//        this.userDetailsService = userDetailsService;
+//        this.userMembershipService = userMembershipService;
+//        this.roleService = roleService;
+//        this.permissionService = permissionService;
+//        this.resourceService = resourceService;
+//        this.actionService = actionService;
+//        this.groupService = groupService;
+//        this.groupDetailsService = groupDetailsService;
+//    }
+//
     @SneakyThrows
     @Override
     public void run(String... args) {
-
-        System.out.println("-----BootStrapData--run-----------");
-
-        String name = "resource";
-
-        String actionName = "action";
+//
+//        System.out.println("-----BootStrapData--run-----------");
+//
+//        String name = "resource";
+//
+//        String actionName = "action";
 //        for (int i = 1; i < 6; i++) {
 
 //            Set<Action> actions = new HashSet<>();
