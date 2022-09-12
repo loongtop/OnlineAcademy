@@ -15,13 +15,17 @@ import javax.validation.constraints.*;
 @Setter
 @NoArgsConstructor
 public class LoginRequest {
-    @NotNull
-    @Email
-    @NotBlank(message = "Email can not be blank!")
-    private String email;
+//    @NotNull
+//    @Email
+//    @NotBlank(message = "Email can not be blank!")
+//    private String email;
 
-    @NotBlank(message = "Password can not be blank!")
-    @Size(min = 6, max = 20)
+//    @NotNull
+//    @NotBlank(message = "Name can not be blank!")
+    private String username;
+
+//    @NotBlank(message = "Password can not be blank!")
+//    @Size(min = 6, max = 20)
     private String password;
 
     private String remember;

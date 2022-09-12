@@ -2,6 +2,7 @@ package com.gkhy.rbacservice.entity.permission;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gkhy.rbacservice.entity.Department;
+import com.gkhy.rbacservice.entity.Menu;
 import com.gkhy.rbacservice.entity.Role;
 import com.gkhy.rbacservice.entity.group.Group;
 import com.gkhy.servicebase.basemodel.DateModel;
@@ -77,4 +78,7 @@ public final class Permission extends DateModel {
             joinColumns = {@JoinColumn(name = "permission_id")},
             inverseJoinColumns = {@JoinColumn(name = "group_id")})
     private Set<Group> groups = new HashSet<>();
+
+    @OneToOne(mappedBy = "permission")
+    private Menu menu;
 }

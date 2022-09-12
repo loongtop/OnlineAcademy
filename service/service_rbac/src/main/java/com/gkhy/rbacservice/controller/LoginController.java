@@ -30,7 +30,8 @@ import java.util.stream.Collectors;
  * @Version: 1.0
  **/
 @RestController
-@RequestMapping
+@RequestMapping("/user")
+@CrossOrigin
 public class LoginController {
 
     private final UserService userService;
@@ -47,37 +48,41 @@ public class LoginController {
     @NotControllerResponseAdvice
     @PostMapping(path = "/login")
     public Object login(@Validated LoginRequest loginRequest) {
-        String email = loginRequest.getEmail();
-        String password = loginRequest.getPassword();
-        String remember = Objects.requireNonNullElse(loginRequest.getRemember(), "");
+//        String name = loginRequest.getUsername();
+//        String password = loginRequest.getPassword();
+//        String remember = Objects.requireNonNullElse(loginRequest.getRemember(), "");
+//
+//        Optional<UserRbac> userRbac = userService.findOneByColumnName("name", name);
+//        if (userRbac.isEmpty()) return ItemFound.fail().data("message", RBACError.LOGIN_FAILED);
+//
+//        UserRbac user = userRbac.get();
+//        if (!passwordEncoder.matches(password, user.getPassword())) {
+//            return Result.fail().codeAndMessage(RBACError.EMAIL_OR_PASSWORD_WRONG);
+//        }
+//
+//        if (!user.getEmailVerified())
+//            return "Go to verified you email with the code!";
+//
+//        List<String> permissions = null;
+//        for (Role role : user.getRoles()) {
+//        }
+//
+//        redisService.set(user.getName() + user.getEmail(), "permissions");
+//
+//        if (remember.equals("on")) {
+//            redisService.set("remember", "remember");
+//        }
 
-        Optional<UserRbac> userRbac = userService.findOneByColumnName("email", email);
-        if (userRbac.isEmpty()) return ItemFound.fail().data("message", RBACError.LOGIN_FAILED);
-
-        UserRbac user = userRbac.get();
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            return Result.fail().codeAndMessage(RBACError.EMAIL_OR_PASSWORD_WRONG);
-        }
-
-        if (!user.getEmailVerified())
-            return "Go to verified you email with the code!";
-
-        List<String> permissions = null;
-        for (Role role : user.getRoles()) {
-        }
-
-        redisService.set(user.getName() + user.getEmail(), "permissions");
-
-        if (remember.equals("on")) {
-            redisService.set("remember", "remember");
-        }
-
-        ModelAndView modelAndView = new ModelAndView("/home1.html");
-//        modelAndView.setViewName("/layout");
-        modelAndView.addObject("info", "leo");
-        modelAndView.addObject("rbacUser", user);
-//        modelAndView.setViewName();
-
-        return modelAndView;
+        return Result.success().data("token","admin-cy");
     }
+
+    //info
+    @GetMapping("/info")
+    public Result info() {
+        return Result.success()
+                .data("roles","admin")
+                .data("name","admin_info")
+                .data("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+    }
+
 }
