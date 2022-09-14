@@ -11,18 +11,7 @@
 
 <div layout:fragment="content">
     <h2>Home Page</h2>
-    <table border="1px">
-        <tr>
-            <th>id</th>
-            <th>name</th>
-        </tr>
-        <!--通过 th:aech 语法迭代user集合-->
-        <!--/*@thymesVar id="users" type=""*/-->
-        <tr th:each="user: ${users}">
-<!--            <td th:text="${user.id}"></td>-->
-<!--            <td th:text="${user.name}"></td>-->
-        </tr>
-    </table>
+
 </div>
 
 <th:block layout:fragment="script">

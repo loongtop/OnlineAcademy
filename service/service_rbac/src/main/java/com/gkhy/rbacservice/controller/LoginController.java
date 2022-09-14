@@ -73,8 +73,7 @@ public class LoginController {
         }
 
         ModelAndView modelAndView = new ModelAndView("/home");
-        List<UserRbac> list = userService.findAll();
-        modelAndView.addObject("users", list);
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
 
