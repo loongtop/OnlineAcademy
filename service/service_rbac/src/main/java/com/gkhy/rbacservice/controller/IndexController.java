@@ -5,8 +5,10 @@ import com.gkhy.servicebase.controller.annotation.NotControllerResponseAdvice;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.rbacservice.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +23,7 @@ import java.util.Map;
 @RequestMapping
 public class IndexController {
 
-    private List<String> list = new ArrayList<>();
+    private final List<String> list = new ArrayList<>();
 
     private final IndexService indexService;
     @Autowired
@@ -65,25 +67,27 @@ public class IndexController {
     @PostMapping("/test1")
     public Object test1(){
 
-        return "/login";
+        return "/test";
     }
 
     @NotControllerResponseAdvice
     @PostMapping("/test2")
     public Object test2(){
         //static file
-        return "login";
+        return "test";
     }
 
     @NotControllerResponseAdvice
     @PostMapping("/test3")
-    public Object test3(){
-        return "redirect:login.html";
+    public Object test3(Model model){
+        model.addAttribute("user", "leo");
+        return "redirect:test1.html";
     }
 
     @NotControllerResponseAdvice
     @PostMapping("/test4")
-    public Object test4(){
-        return "redirect:layout.html";
+    public Object test4(Model model) {
+        model.addAttribute("user", "leo");
+        return "test";
     }
 }

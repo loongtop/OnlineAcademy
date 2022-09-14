@@ -3,6 +3,7 @@ package com.gkhy.rbacservice.service;
 
 import com.gkhy.rbacservice.entity.UserRbac;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -14,4 +15,6 @@ public interface UserService {
     UserRbac save(UserRbac entity);
 
     boolean existsByColumnName(String email, String email1);
+
+    List<UserRbac> findAll();
 }

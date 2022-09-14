@@ -71,7 +71,7 @@ public class RegisterController {
             redisService.set("remember", "remember");
         }
 
-        return "redirect:/login.html";
+        return "redirect:/loginp.html";
     }
 
 }

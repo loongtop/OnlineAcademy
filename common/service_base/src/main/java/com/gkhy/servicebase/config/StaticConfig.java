@@ -34,7 +34,7 @@ public abstract class StaticConfig implements WebMvcConfigurer {
                 //.addResourceHandler("/**") // « /css/myStatic.css
                 .addResourceHandler("/static/**") // « /static/css/myStatic.css
                 .addResourceLocations("classpath:/static/") // Default Static Loaction
-                .addResourceLocations("classpath:/custom/")
+                .addResourceLocations("classpath:/public/")
                 .setCachePeriod( 3600 )
                 .resourceChain(true) // 4.1
                 .addResolver(new GzipResourceResolver()) // 4.1

@@ -8,18 +8,17 @@ import com.gkhy.rbacservice.service.UserService;
 import com.gkhy.servicebase.controller.annotation.NotControllerResponseAdvice;
 import com.gkhy.servicebase.redis.RedisService;
 import com.gkhy.servicebase.result.Result;
-import com.gkhy.servicebase.result.status.StatusCode;
 import com.gkhy.servicebase.utils.ItemFound;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @Name: LoginController
@@ -30,7 +29,7 @@ import java.util.stream.Collectors;
  * @Version: 1.0
  **/
 @RestController
-@RequestMapping("/user")
+@RequestMapping
 @CrossOrigin
 public class LoginController {
 
@@ -48,41 +47,40 @@ public class LoginController {
     @NotControllerResponseAdvice
     @PostMapping(path = "/login")
     public Object login(@Validated LoginRequest loginRequest) {
-//        String name = loginRequest.getUsername();
-//        String password = loginRequest.getPassword();
-//        String remember = Objects.requireNonNullElse(loginRequest.getRemember(), "");
-//
-//        Optional<UserRbac> userRbac = userService.findOneByColumnName("name", name);
-//        if (userRbac.isEmpty()) return ItemFound.fail().data("message", RBACError.LOGIN_FAILED);
-//
-//        UserRbac user = userRbac.get();
-//        if (!passwordEncoder.matches(password, user.getPassword())) {
-//            return Result.fail().codeAndMessage(RBACError.EMAIL_OR_PASSWORD_WRONG);
-//        }
-//
-//        if (!user.getEmailVerified())
-//            return "Go to verified you email with the code!";
-//
-//        List<String> permissions = null;
-//        for (Role role : user.getRoles()) {
-//        }
-//
-//        redisService.set(user.getName() + user.getEmail(), "permissions");
-//
-//        if (remember.equals("on")) {
-//            redisService.set("remember", "remember");
-//        }
+        String email = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
+        String remember = Objects.requireNonNullElse(loginRequest.getRemember(), "");
 
-        return Result.success().data("token","admin-cy");
+        Optional<UserRbac> userRbac = userService.findOneByColumnName("email", email);
+        if (userRbac.isEmpty()) return ItemFound.fail().data("message", RBACError.LOGIN_FAILED);
+
+        UserRbac user = userRbac.get();
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            return Result.fail().codeAndMessage(RBACError.EMAIL_OR_PASSWORD_WRONG);
+        }
+
+        if (!user.getEmailVerified())
+            return "Go to verified you email with the code!";
+
+        List<String> permissions = null;
+        for (Role role : user.getRoles()) {
+        }
+
+        redisService.set(user.getName() + user.getEmail(), "permissions");
+
+        if (remember.equals("on")) {
+            redisService.set("remember", "remember");
+        }
+
+        ModelAndView modelAndView = new ModelAndView("/home");
+        List<UserRbac> list = userService.findAll();
+        modelAndView.addObject("users", list);
+        return modelAndView;
     }
 
-    //info
-    @GetMapping("/info")
+    @GetMapping("/userInfo")
     public Result info() {
-        return Result.success()
-                .data("roles","admin")
-                .data("name","admin_info")
-                .data("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        return Result.success();
     }
 
 }
