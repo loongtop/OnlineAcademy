@@ -1,7 +1,8 @@
 package com.gkhy.serviceoauth2.entity.userinfo;
 
 import com.gkhy.servicebase.exception.AcademyException;
-import com.gkhy.servicebase.user.enums.AuthProvider;
+import com.gkhy.serviceoauth2.entity.enums.AuthProvider;
+
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.gkhy.servicebase.user.enums;
+package com.gkhy.serviceoauth2.entity.enums;
 
 public enum AuthProvider {
     LOCAL,

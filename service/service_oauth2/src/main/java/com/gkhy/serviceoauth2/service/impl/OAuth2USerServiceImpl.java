@@ -1,9 +1,9 @@
 package com.gkhy.serviceoauth2.service.impl;
 
 import com.gkhy.servicebase.exception.AcademyException;
-import com.gkhy.servicebase.user.User;
+import com.gkhy.serviceoauth2.entity.User;
 import com.gkhy.serviceoauth2.entity.UserPrincipal;
-import com.gkhy.servicebase.user.enums.AuthProvider;
+import com.gkhy.serviceoauth2.entity.enums.AuthProvider;
 import com.gkhy.serviceoauth2.entity.userinfo.OAuth2UserInfo;
 import com.gkhy.serviceoauth2.entity.userinfo.OAuth2UserInfoFactory;
 import com.gkhy.serviceoauth2.error.Oauth2Error;

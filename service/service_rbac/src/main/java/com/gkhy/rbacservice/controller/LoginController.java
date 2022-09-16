@@ -9,12 +9,10 @@ import com.gkhy.servicebase.controller.annotation.NotControllerResponseAdvice;
 import com.gkhy.servicebase.redis.RedisService;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.servicebase.utils.ItemFound;
+import com.gkhy.servicebase.utils.ResponseModel;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Objects;
@@ -71,10 +69,8 @@ public class LoginController {
         if (remember.equals("on")) {
             redisService.set("remember", "remember");
         }
-
-        ModelAndView modelAndView = new ModelAndView("/home");
-        modelAndView.addObject("user", user);
-        return modelAndView;
+        return ResponseModel.of("home", user);
+//        return new ModelAndView("admin/user/user-add");
     }
 
     @GetMapping("/userInfo")

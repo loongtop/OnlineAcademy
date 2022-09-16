@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Controller
-@RequestMapping
+@RestController
+@RequestMapping("/index")
 public class IndexController {
 
     private final List<String> list = new ArrayList<>();
@@ -63,25 +63,25 @@ public class IndexController {
         return modelAndView;
     }
 
-    @NotControllerResponseAdvice
-    @PostMapping("/test1")
+    @GetMapping("/test1")
     public Object test1(){
-
-        return "/test";
+        return Result.success();
     }
 
     @NotControllerResponseAdvice
     @PostMapping("/test2")
     public Object test2(){
         //static file
-        return "test";
+        return"redirect:test1";
     }
 
     @NotControllerResponseAdvice
     @PostMapping("/test3")
     public Object test3(Model model){
         model.addAttribute("user", "leo");
-        return "redirect:test1.html";
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:test1");
+        return modelAndView;
     }
 
     @NotControllerResponseAdvice

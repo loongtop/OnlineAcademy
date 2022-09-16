@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{shared/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title">User list</h1>
+                    <a href="/admin/user/getAdd">
+                        <div class="col-sm-offset-2 col-sm-6">
+                            <button type="button" class="btn btn-block btn-primary btn-xs">Add a new One</button>
+                        </div>
+                    </a>
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control float-right"
+                                   placeholder="Search">
+
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Verified</th>
+                            <th>Description</th>
+                            <th>Detail</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tr>
+                        <!--通过 th:each 语法迭代user集合-->
+<!--                        <tr th:each="user: ${data}">-->
+<!--                            <td th:text="${user.id}"></td>-->
+<!--                            <td th:text="${user.name}"></td>-->
+<!--                            <td th:text="${user.email}"></td>-->
+<!--                            <td th:text="${user.emailVerified}"></td>-->
+<!--                            <td th:text="${user.description}"></td>-->
+<!--                            <td><a th:href="${'/admin/user/get/' + user.id}">Detail</a></td>-->
+<!--                            <td>-->
+<!--                                <a th:href="${'/admin/user/update/' + user.id}">Update</a> |-->
+<!--                                <a th:href="${'/admin/user/remove/' + user.id}">Delete</a>-->
+<!--                            </td>-->
+<!--                            <td>-->
+<!--                                <button type="button" class="btn btn-warning" data-toggle="modal"-->
+<!--                                        data-target="#modal-warning">-->
+<!--                                    Launch Warning Modal-->
+<!--                                </button>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer clearfix">
+                    <ul class="pagination pagination-sm m-0 float-right">
+                        <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+</div>
+
+<th:block layout:fragment="script">
+    <script>
+        console.log("Home Page");
+    </script>
+</th:block>
+
+</body>
+</html>

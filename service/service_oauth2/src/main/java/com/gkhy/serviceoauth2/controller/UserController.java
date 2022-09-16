@@ -1,12 +1,12 @@
 package com.gkhy.serviceoauth2.controller;
 
-import com.gkhy.servicebase.user.enums.AuthProvider;
-import com.gkhy.servicebase.user.User;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.servicebase.utils.ItemFound;
+import com.gkhy.serviceoauth2.entity.User;
 import com.gkhy.serviceoauth2.entity.UserPrincipal;
 import com.gkhy.serviceoauth2.entity.annotation.CurrentUser;
 
+import com.gkhy.serviceoauth2.entity.enums.AuthProvider;
 import com.gkhy.serviceoauth2.entity.request.RegisterRequest;
 import com.gkhy.serviceoauth2.entity.request.SignInRequest;
 import com.gkhy.serviceoauth2.error.Oauth2Error;
@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.Optional;
+
 
 /**
  * <p>

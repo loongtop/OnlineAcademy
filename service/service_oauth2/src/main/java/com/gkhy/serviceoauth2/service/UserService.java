@@ -1,6 +1,6 @@
 package com.gkhy.serviceoauth2.service;
 
-import com.gkhy.servicebase.user.User;
+import com.gkhy.serviceoauth2.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;

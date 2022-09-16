@@ -1,5 +1,6 @@
 package com.gkhy.rbacservice.controller;
 
+import com.gkhy.rbacservice.entity.UserRbac;
 import com.gkhy.rbacservice.entity.permission.Permission;
 import com.gkhy.rbacservice.repository.RoleRepository;
 import com.gkhy.rbacservice.service.PermissionService;
@@ -8,6 +9,7 @@ import com.gkhy.rbacservice.entity.Role;
 import com.gkhy.rbacservice.service.RoleService;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.servicebase.utils.ItemFound;
+import com.gkhy.servicebase.utils.ResponseModel;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

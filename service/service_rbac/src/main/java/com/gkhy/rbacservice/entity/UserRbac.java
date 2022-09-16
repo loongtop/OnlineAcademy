@@ -7,6 +7,7 @@ import com.gkhy.rbacservice.entity.group.Group;
 import com.gkhy.rbacservice.entity.userDetails.UserDetails;
 import com.gkhy.rbacservice.entity.userDetails.UserMembership;
 import com.gkhy.servicebase.basemodel.DateModel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

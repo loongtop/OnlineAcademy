@@ -12,8 +12,7 @@ import com.gkhy.servicebase.service.repository.IService;
 
 /**
  * abstract ServiceImpl class for all the model service inheriting
- *
- * */
+ */
 public abstract class ServiceImpl<T, E extends Number, Repository extends IService<T, E>> {
 
     protected Repository iRepository;
@@ -66,7 +65,7 @@ public abstract class ServiceImpl<T, E extends Number, Repository extends IServi
         return iRepository.findAll(pageable);
     }
 
-    public List<T> findAllById(Iterable<E> ids){
+    public List<T> findAllById(Iterable<E> ids) {
         return iRepository.findAllById(ids);
     }
 
@@ -128,9 +127,13 @@ public abstract class ServiceImpl<T, E extends Number, Repository extends IServi
     }
 
     public T save(T entity) {
-            return iRepository.saveAndFlush(entity);
-        }
+        return iRepository.saveAndFlush(entity);
+    }
 
+//    public T save(Object entity) {
+//        T t = (T) new Object();
+//        return update(entity, t);
+//    }
     public List<T> saveAll(Iterable<T> entities) {
         return iRepository.saveAllAndFlush(entities);
     }
@@ -140,13 +143,13 @@ public abstract class ServiceImpl<T, E extends Number, Repository extends IServi
         return iRepository.saveAndFlush(entity);
     }
 
-    public List<T> findAllOrderByLimit(Sort.Direction direction, String property, int limit ) {
+    public List<T> findAllOrderByLimit(Sort.Direction direction, String property, int limit) {
         Sort sort = Sort.by(direction, property);
-        return  new ArrayList<>(iRepository.findAll(sort).subList(0, limit));
+        return new ArrayList<>(iRepository.findAll(sort).subList(0, limit));
     }
 
     private Specification<T> getSpecification(String columnName, String value) {
-        return (root, query, cb) ->  cb.equal(root.get(columnName), value);
+        return (root, query, cb) -> cb.equal(root.get(columnName), value);
     }
 
     public Optional<T> findOneByColumnName(String columnName, String value) {

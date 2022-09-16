@@ -11,8 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import com.gkhy.servicebase.user.User;
-
 @Builder
 @Getter
 public class UserPrincipal implements org.springframework.security.oauth2.core.user.OAuth2User, UserDetails {

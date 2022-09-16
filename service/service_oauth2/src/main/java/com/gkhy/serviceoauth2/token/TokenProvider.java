@@ -1,7 +1,7 @@
 package com.gkhy.serviceoauth2.token;
 
-import com.gkhy.servicebase.user.User;
 import com.gkhy.serviceoauth2.config.OAuth2Properties;
+import com.gkhy.serviceoauth2.entity.User;
 import com.gkhy.serviceoauth2.entity.UserPrincipal;
 import com.gkhy.serviceoauth2.error.Oauth2Error;
 import io.jsonwebtoken.*;
@@ -22,12 +22,11 @@ public class TokenProvider implements Serializable {
     private static final long serialVersionUID = 5777410839989209849L;
     private static final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
 
-    @Autowired
     private OAuth2Properties oAuth2Properties;
-//    @Autowired
-//    public TokenProvider(OAuth2Properties oAuth2Properties) {
-//        this.oAuth2Properties = oAuth2Properties;
-//    }
+    @Autowired
+    public TokenProvider(OAuth2Properties oAuth2Properties) {
+        this.oAuth2Properties = oAuth2Properties;
+    }
 
     /**
      * create Token

@@ -1,20 +1,17 @@
-package com.gkhy.servicebase.user;
+package com.gkhy.serviceoauth2.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.gkhy.servicebase.basemodel.DateModel;
+import com.gkhy.serviceoauth2.entity.enums.AuthProvider;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-
-import lombok.Data;
-
-import com.gkhy.servicebase.basemodel.DateModel;
-import com.gkhy.servicebase.user.enums.AuthProvider;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Setter
