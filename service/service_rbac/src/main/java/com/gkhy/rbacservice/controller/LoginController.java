@@ -6,13 +6,14 @@ import com.gkhy.rbacservice.error.RBACError;
 import com.gkhy.rbacservice.entity.request.LoginRequest;
 import com.gkhy.rbacservice.service.UserService;
 import com.gkhy.servicebase.controller.annotation.NotControllerResponseAdvice;
-import com.gkhy.servicebase.redis.RedisService;
+import com.gkhy.servicebase.utils.redis.RedisService;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.servicebase.utils.ItemFound;
 import com.gkhy.servicebase.utils.ResponseModel;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Objects;
@@ -70,7 +71,7 @@ public class LoginController {
             redisService.set("remember", "remember");
         }
         return ResponseModel.of("home", user);
-//        return new ModelAndView("admin/user/user-add");
+//        return new ModelAndView("admin/user/test");
     }
 
     @GetMapping("/userInfo")

@@ -1,7 +1,7 @@
 package com.gkhy.servicebase.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.gkhy.servicebase.redis.RedisService;
+import com.gkhy.servicebase.utils.redis.RedisService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;

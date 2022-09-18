@@ -1,7 +1,7 @@
 package com.gkhy.rbacservice.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.gkhy.servicebase.redis.RedisService;
+import com.gkhy.servicebase.utils.redis.RedisService;
 import com.gkhy.rbacservice.entity.UserRbac;
 import com.gkhy.rbacservice.service.IndexService;
 import com.gkhy.rbacservice.service.PermissionService;

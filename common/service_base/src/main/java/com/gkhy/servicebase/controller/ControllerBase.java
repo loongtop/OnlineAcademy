@@ -57,7 +57,8 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
     public Object findAll() {
         //Call the method of service to query all operations
         List<T> lists = repository.findAll();
-        return ResponseModel.of(name, lists);
+        return ResponseModel.of("test", lists);
+//        return ResponseModel.of(name, lists);
     }
 
     //Add a record(row) to the table

@@ -1,4 +1,4 @@
-package com.gkhy.servicebase.redis;
+package com.gkhy.servicebase.utils.redis;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

@@ -5,7 +5,7 @@ import com.gkhy.rbacservice.entity.request.RegisterRequest;
 import com.gkhy.rbacservice.error.RBACError;
 import com.gkhy.rbacservice.service.RegisterService;
 import com.gkhy.rbacservice.service.UserService;
-import com.gkhy.servicebase.redis.RedisService;
+import com.gkhy.servicebase.utils.redis.RedisService;
 import com.gkhy.servicebase.result.Result;
 import lombok.SneakyThrows;
 import org.springframework.security.crypto.password.PasswordEncoder;

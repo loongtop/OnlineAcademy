@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.gkhy.rbacservice.entity.UserRbac;
 import com.gkhy.rbacservice.error.RBACError;
 import com.gkhy.rbacservice.service.UserService;
-import com.gkhy.servicebase.redis.RedisService;
+import com.gkhy.servicebase.utils.redis.RedisService;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.servicebase.utils.ItemFound;
 import org.springframework.beans.factory.annotation.Autowired;
