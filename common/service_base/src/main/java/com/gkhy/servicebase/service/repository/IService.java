@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -65,9 +66,4 @@ public interface IService<T, E extends Number> {
 
     <S extends T> List<S> saveAllAndFlush(Iterable<S> entities);
 
-//    @Query(value = "select e from #{#entityName} e where e.enabled=true")
-//    List<T> findAllEnabled();
-
-//    @Query(value = "select e from #{#entityName} e where e.name=?1")
-//    T findByName(String name);
 }

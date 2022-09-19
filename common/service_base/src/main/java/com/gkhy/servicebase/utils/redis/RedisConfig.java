@@ -25,12 +25,12 @@ import java.lang.reflect.Method;
 import java.time.Duration;
 
 /**
- * Springboot中使用redis操作的两种方式：lettuce和jedis,两者在进行操作时都需要序列化器来实现序列化（推荐使用jackson2JsonRedisSerializer
- * ,相比于JDK提供的序列化器和String序列化器长度更短）
- * Springboot 1.x底层用的是jedis，Springboot 2.x用的是lettuce,Lettuce 和 Jedis 的定位都是Redis的client，所以他们当然都可以直接连接redis server。
- * Jedis在实现上是直接连接的redis server，如果在多线程环境下是非线程安全的，这个时候只有使用连接池，为每个Jedis实例增加物理连接
- * Lettuce的连接是基于Netty的，连接实例（StatefulRedisConnection）可以在多个线程间并发访问，应为StatefulRedisConnection是线程安全的，
- * 所以一个连接实例（StatefulRedisConnection）就可以满足多线程环境下的并发访问，一个连接实例不够的情况也可以按需增加连接实例。
+ * There are two ways to use redis operations in Springboot: lettuce and jedis, both of which require serializers to achieve serialization (jackson2JsonRedisSerializer is recommended)
+ * , shorter than the serializer and String serializer provided by JDK)
+ * The bottom layer of Springboot 1.x uses jedis, and Springboot 2.x uses lettuce. Lettuce and Jedis are positioned as Redis clients, so of course they can directly connect to the redis server.
+ * Jedis is a directly connected redis server in implementation. If it is not thread-safe in a multi-threaded environment, only the connection pool is used at this time to add physical connections to each Jedis instance
+ * Lettuce's connection is based on Netty, and the connection instance (StatefulRedisConnection) can be accessed concurrently between multiple threads. It should be thread-safe for StatefulRedisConnection.
+ * Therefore, one connection instance (StatefulRedisConnection) can satisfy concurrent access in a multi-threaded environment, and if one connection instance is not enough, you can also add connection instances as needed.
  **/
 
 @EnableCaching

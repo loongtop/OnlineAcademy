@@ -12,7 +12,14 @@ import com.gkhy.rbacservice.service.RoleService;
 import com.gkhy.servicebase.result.status.StatusCode;
 import com.gkhy.servicebase.utils.ItemFound;
 import com.gkhy.servicebase.utils.ResponseModel;
+import com.gkhy.servicebase.utils.hibernate.Criteria;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -60,7 +67,7 @@ public class UserController extends ControllerBase<UserRbac, Long, UserRepositor
         if (roleList.size() <= 0) return ItemFound.fail();
 
         UserRbac entity = user.get();
-        roleList.forEach(r->{
+        roleList.forEach(r -> {
             entity.getRoles().add(r);
             r.getUser().add(entity);
             roleService.save(r);
@@ -101,5 +108,22 @@ public class UserController extends ControllerBase<UserRbac, Long, UserRepositor
     public Object add(@Valid RegisterRequest registerRequest) {
         ModelAndView modelAndView = ResponseModel.of("/all");
         return registerService.register(registerRequest, modelAndView);
+    }
+
+    //Query all rows(data) from the table
+    @GetMapping("/all")
+    public Object findAllTest() {
+        //Call the method of service to query all operations
+
+        Specification<UserRbac> spec = new Criteria<UserRbac>()
+                .like(true, UserRbac::getName, "leo")
+                .eq(UserRbac::getEnabled, true)
+                .orderByAsc(UserRbac::getId);
+
+        Pageable pageable = PageRequest.of(1, 2);
+
+        Page<UserRbac> lists = userService.findAll(spec, pageable);
+
+        return ResponseModel.of("userrbac", lists.getContent());
     }
 }

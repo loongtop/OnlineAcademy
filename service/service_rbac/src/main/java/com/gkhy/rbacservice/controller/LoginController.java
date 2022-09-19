@@ -70,8 +70,9 @@ public class LoginController {
         if (remember.equals("on")) {
             redisService.set("remember", "remember");
         }
+        List<UserRbac> list = userService.findAll();
         return ResponseModel.of("home", user);
-//        return new ModelAndView("admin/user/test");
+//        return ResponseModel.of("userrbac", list);
     }
 
     @GetMapping("/userInfo")

@@ -4,7 +4,6 @@ import com.gkhy.cmsservice.entity.CrmBanner;
 import com.gkhy.cmsservice.service.CrmBannerService;
 import com.gkhy.servicebase.result.Result;
 import com.gkhy.servicebase.utils.ItemFound;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +42,6 @@ public final class BannerAdminController {
         return Result.success().data("item", banner);
     }
 
-    @ApiOperation(value = "get Banner")
     @GetMapping("get/{id}")
     public Result get(@PathVariable Long id) {
         Optional<CrmBanner> crmBanner = bannerService.findById(id);
@@ -52,7 +50,6 @@ public final class BannerAdminController {
         return Result.success().data("item", crmBanner);
     }
 
-    @ApiOperation(value = "edit Banner")
     @PutMapping("update")
     public Result update(@RequestBody CrmBanner banner) {
 
@@ -60,7 +57,6 @@ public final class BannerAdminController {
         return Result.success().data("item", entity);
     }
 
-    @ApiOperation(value = "delete Banner")
     @DeleteMapping("remove/{id}")
     public Result remove(@PathVariable Long id) {
         bannerService.removeById(id);

@@ -1,7 +1,6 @@
 package com.gkhy.cmsservice.entity;
 
 import com.gkhy.servicebase.basemodel.DateModel;
-import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -23,7 +22,6 @@ import java.io.Serializable;
 @Getter
 @Accessors(chain = true)
 @Entity
-@ApiModel(value="CrmBanner Object", description="Home banner sheet")
 public class CrmBanner extends DateModel implements Serializable {
 
     private static final long serialVersionUID = 4833398331890223365L;

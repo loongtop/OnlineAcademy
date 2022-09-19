@@ -7,7 +7,6 @@ import com.gkhy.rbacservice.entity.group.Group;
 import com.gkhy.rbacservice.entity.userDetails.UserDetails;
 import com.gkhy.rbacservice.entity.userDetails.UserMembership;
 import com.gkhy.servicebase.basemodel.DateModel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,24 +29,24 @@ public class UserRbac extends DateModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    protected Long id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
-    protected String name;
+    private String name;
 
     @JsonIgnore
     @Column(name = "password", nullable = false)
-    protected String password;
+    private String password;
 
     @Email
     @Column(name = "email", nullable = false)
-    protected String email;
+    private String email;
 
     @Column(name = "email_verified", nullable = false)
-    protected Boolean emailVerified = false;
+    private Boolean emailVerified = false;
 
     @Column(name = "description")
-    protected String description;
+    private String description;
 
     @Column(name = "enabled", nullable = false)
     private Boolean enabled = Boolean.TRUE;

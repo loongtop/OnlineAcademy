@@ -38,4 +38,7 @@ public class UserServiceImpl
     public Set<Group> getGroups(UserRbac userRbac) {
         return userRbac.getGroups();
     }
+
+
+
 }

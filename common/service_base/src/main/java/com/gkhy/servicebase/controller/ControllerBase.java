@@ -8,12 +8,15 @@ import com.gkhy.servicebase.result.status.StatusCode;
 import com.gkhy.servicebase.service.repository.IService;
 import com.gkhy.servicebase.utils.ItemFound;
 import com.gkhy.servicebase.utils.ResponseModel;
+import com.gkhy.servicebase.utils.hibernate.Criteria;
 import org.apache.commons.beanutils.PropertyUtilsBean;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -49,11 +52,11 @@ public abstract class ControllerBase<T, E extends Number, Repository extends ISe
         this.repository = repository;
         ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
         className = parameterizedType.getActualTypeArguments()[0].getTypeName();
-        name = className.split("\\.")[className.split("\\.").length-1].toLowerCase(Locale.ROOT);
+        name = className.split("\\.")[className.split("\\.").length - 1].toLowerCase(Locale.ROOT);
     }
 
     //Query all rows(data) from the table
-    @GetMapping("/all")
+    @GetMapping("/list")
     public Object findAll() {
         //Call the method of service to query all operations
         List<T> lists = repository.findAll();
